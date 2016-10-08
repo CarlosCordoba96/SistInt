@@ -59,7 +59,7 @@ public class TestSplit {
 	    
 	    public static void showimage (BufferedImage[][] imgs, int ImgWidth, int ImgHeight) {
 	    	JFrame frame = new JFrame();
-	    	
+	    	//
 	    	frame.getContentPane().setLayout(new FlowLayout());
 	        for (int i = 0; i < imgs.length; i++) {
 	        	for (int j = 0; j < imgs[i].length; j++) {
