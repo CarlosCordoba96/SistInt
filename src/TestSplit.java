@@ -14,8 +14,8 @@ public class TestSplit {
 
 	    public static void main(String[] args) throws IOException {
 
-	        File file = new File("D:/Programas/workspace/Game/pics/alhambra.png"); // I have cat.jpg in my working directory (1080x820) [empieza en el p 30]
-	        File file2 = new File ("D:/Programas/workspace/Game/pics/alhambraf.png");
+	        File file = new File("C:/Users/Carlos/workspace/Game/pics/alhambra.png"); // I have cat.jpg in my working directory (1080x820) [empieza en el p 30]
+	        File file2 = new File ("C:/Users/Carlos/workspace/Game/pics/alhambra.png");
 	        FileInputStream img = new FileInputStream(file);
 	        FileInputStream img2 = new FileInputStream(file2);
 	        BufferedImage image = ImageIO.read(img); //reading the image file
@@ -35,13 +35,13 @@ public class TestSplit {
 	        
 	        spliting(rows, cols, splitWidth, splitHeight, image, imgs);
 	        spliting(rows, cols, splitWidth, splitHeight, image2, imgs2);
-	        //showimage(imgs, ImgWidth, ImgHeight);
+	        createfirstblackimg(imgs);
 	        //showimage(imgs2, ImgWidth, ImgHeight);
 	        
 	        compareimgs(imgs, imgs2);
 	        findpos(imgs, imgs2, pos);
 	        
-	        //mergeimg(imgs, ImgWidth, ImgHeight);
+	        printimg(mergeimg(imgs, ImgWidth, ImgHeight,rows,cols));
 	        
 	}
 	    
@@ -70,31 +70,17 @@ public class TestSplit {
 	        System.out.println("Mini images created");
 	    }
 	    
-	    public static void showimage (BufferedImage[][] imgs, int ImgWidth, int ImgHeight) {
-	    	JFrame frame = new JFrame();
-	    	
-	    	frame.getContentPane().setLayout(new FlowLayout());
-	        for (int i = 0; i < imgs.length; i++) {
-	        	for (int j = 0; j < imgs[i].length; j++) {
-	        		if (i == 0 && j == 0){
+	    public static void createfirstblackimg (BufferedImage[][] imgs) {//crea el primer recuadro negro
 		        	    int width;
 		       	        int height;
 		       	        width=imgs[0][0].getWidth();
 		       	        height=imgs[0][0].getHeight();
 		       	        BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		       	        imgs[0][0] = imag;					//Posiblemente hacer todo método para meter la primera entrada en negro.
-		       	        frame.getContentPane().add(new JLabel(new ImageIcon(imag)));
-		        	} else {
-		        		frame.getContentPane().add(new JLabel(new ImageIcon(imgs[i][j])));
-		        	}
-	        	}
-	        }
-	    	frame.pack();
-	    	frame.setSize(ImgWidth + 50, ImgHeight + 75);
-	    	frame.setVisible(true);
+		       	        
 	    }
 	    
-	    public static boolean compareminimg (BufferedImage img1, BufferedImage img2){
+	    public static boolean compareminimg (BufferedImage img1, BufferedImage img2){//COMPARAR DOS IMAGENES
 	    	if (img1.getWidth() != img2.getWidth() || img1.getHeight()!= img2.getHeight()) {
 	            return false;
 	       }
@@ -144,23 +130,24 @@ public class TestSplit {
 			}
 	    }   
 	    
-	    public static void mergeimg (BufferedImage[][] img, int width, int height, int rows, int cols) throws IOException {
+	    public static BufferedImage mergeimg (BufferedImage[][] img, int width, int height, int rows, int cols) throws IOException {//JUNTA LA MATRIZ EN UNA IMAGEN 
 	    	 BufferedImage resimg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	    	 Graphics g = resimg.getGraphics();
+	    	 int imgwidth;
+	    	 int imgheigth;
 	    	 int x=0; int y=0;
 	    	 int i=0;
 	    	 int j=0;
 	    	    for (int k = 0; k < img.length; k++) {
 	    	    	for(int l=0;l<img[k].length ;l++){
 					BufferedImage bi =img[k][l];
-					System.out.println("img"+i+""+j+".png");
 	    	        j++;
 	    	        if(j==cols){
 	    	        	i++;
 	    	        	j=0;
 	    	        }
 	    	        g.drawImage(bi, x, y, null);
-	    	        System.out.println(" "+i + " "+j);
+	    	      
 	    	        x += bi.getWidth();
 	    	        if(x == resimg.getWidth()){
 	    	            x = 0;
@@ -171,6 +158,19 @@ public class TestSplit {
 	    	    
 	    	 ImageIO.write(resimg,"png",new File("result.png"));
 	    	 System.out.println("FINAL IMAGE CREATED");
+		    	return resimg;
+	    }
+	    
+	    
+	    public static void printimg(BufferedImage img){
+	    	int imgwidth,imgheigth;
+	    	JFrame frame = new JFrame();
+	    	 imgwidth=img.getWidth();
+	    	 imgheigth=img.getHeight();
+	    	frame.getContentPane().setLayout(new FlowLayout());
+	    	frame.getContentPane().add(new JLabel(new ImageIcon(img)));
+	    	frame.setSize(imgwidth+30, imgheigth+50);
+	    	frame.setVisible(true);   	
 	    }
 	    
 	    public static void moveleft(int[][] array){
