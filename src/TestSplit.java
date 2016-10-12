@@ -13,7 +13,7 @@
 public class TestSplit {
 
 	    public static void main(String[] args) throws IOException {
-
+	    	JFrame frame = new JFrame();
 	        File file = new File("C:/Users/Carlos/workspace/Game/pics/alhambra.png"); // I have cat.jpg in my working directory (1080x820) [empieza en el p 30]
 	        File file2 = new File ("C:/Users/Carlos/workspace/Game/pics/alhambra.png");
 	        FileInputStream img = new FileInputStream(file);
@@ -33,16 +33,18 @@ public class TestSplit {
 	        
 	        int pos[][] = new int [rows][cols];
 	        
+	  
+	        
 	        spliting(rows, cols, splitWidth, splitHeight, image, imgs);
 	        spliting(rows, cols, splitWidth, splitHeight, image2, imgs2);
+	        compareimgs(imgs, imgs2);
 	        createfirstblackimg(imgs);
 	        //showimage(imgs2, ImgWidth, ImgHeight);
 	        
-	        compareimgs(imgs, imgs2);
+	        
 	        findpos(imgs, imgs2, pos);
-	        
-	        printimg(mergeimg(imgs, ImgWidth, ImgHeight,rows,cols));
-	        
+	        moveright(imgs);
+	        printimg(mergeimg(imgs, ImgWidth, ImgHeight,rows,cols),frame);
 	}
 	    
 	    public static void spliting (int rows, int cols, int splitWidth, int splitHeight, BufferedImage image, BufferedImage[][] imgs) throws IOException {
@@ -81,9 +83,11 @@ public class TestSplit {
 	    }
 	    
 	    public static boolean compareminimg (BufferedImage img1, BufferedImage img2){//COMPARAR DOS IMAGENES
+	    	
 	    	if (img1.getWidth() != img2.getWidth() || img1.getHeight()!= img2.getHeight()) {
 	            return false;
 	       }
+	    	int npixels= img1.getWidth() * img1.getHeight();
 	       for (int x = 1; x < img2.getWidth(); x++) {
 	           for (int y = 1; y < img2.getHeight(); y++) {
 	                if (img1.getRGB(x, y) != img2.getRGB(x, y)) {
@@ -162,22 +166,23 @@ public class TestSplit {
 	    }
 	    
 	    
-	    public static void printimg(BufferedImage img){
+	    public static void printimg(BufferedImage img, JFrame frame){
 	    	int imgwidth,imgheigth;
-	    	JFrame frame = new JFrame();
+	    	
 	    	 imgwidth=img.getWidth();
 	    	 imgheigth=img.getHeight();
 	    	frame.getContentPane().setLayout(new FlowLayout());
 	    	frame.getContentPane().add(new JLabel(new ImageIcon(img)));
 	    	frame.setSize(imgwidth+30, imgheigth+50);
-	    	frame.setVisible(true);   	
+	    	frame.setVisible(true);
+	    	
 	    }
 	    
 	    public static void moveleft(int[][] array){
 	    	
 	    	int ibuff = 0, jbuff = 0;
 	    	for(int i = 0; i<array.length; i ++){
-	    		for(int j = 0; i<array[0].length; j++){
+	    		for(int j = 0; i<array[i].length; j++){
 	    			if(array[i][j] == 0){
 	    				ibuff = i;
 	    				jbuff = j;
@@ -189,20 +194,22 @@ public class TestSplit {
 	    	//Aqui se cambia la imagen displayeada
 	    }
 	    
-	    public static void moveright(int[][] array){
-	    	
+	    public static void moveright(BufferedImage [][] array){
+	    	int width=array[0][0].getWidth();
+   	        int height=array[0][0].getHeight();
+	    	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	    	int ibuff = 0, jbuff = 0;
+	    	 System.out.println("Array length: "+array[1].length);
 	    	for(int i = 0; i<array.length; i ++){
-	    		for(int j = 0; i<array[0].length; j++){
-	    			if(array[i][j] == 0){
+	    		for(int j = 0; j<array[i].length-1; j++){	 
+	    			if(compareminimg(array[i][j],imag)){
 	    				ibuff = i;
 	    				jbuff = j;
 	    			}
 	    		}
 	    	}
-	    	array[ibuff][jbuff] = array[ibuff+1][jbuff];
-	    	array[ibuff+1][jbuff] = 0;
-	    	//Aqui se cambia la imagen displayeada
+	    	array[ibuff][jbuff] = array[ibuff][jbuff+1];
+	    	array[ibuff][jbuff+1] = imag;
 	    }
 	    
 	    public static void moveup(int[][] array){
