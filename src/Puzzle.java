@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
+//C:/Users/Carlos/workspace/Game/pics/alhambra.png
 public class Puzzle {
 
 	protected static JFrame frame;

@@ -44,10 +44,36 @@ public class TestSplit {
 	        
 	        p.printimg(mergeimg(imgs, ImgWidth, ImgHeight,rows,cols));
 	        findpos(imgs, imgs2, pos);
-	        moveright(imgs);
+	        printarray(pos);
 	        
+	        moveright(imgs, pos);
 	        p.printimg(mergeimg(imgs, ImgWidth, ImgHeight,rows,cols));
+	        printarray(pos);
+	        
+	        moveleft(imgs, pos);
+	        p.printimg(mergeimg(imgs, ImgWidth, ImgHeight,rows,cols));
+	        printarray(pos);
+	        
+	        movedown(imgs,pos);
+	        p.printimg(mergeimg(imgs, ImgWidth, ImgHeight,rows,cols));
+	        printarray(pos);
+	        
+	        moveup(imgs,pos);
+	        p.printimg(mergeimg(imgs, ImgWidth, ImgHeight,rows,cols));
+	        printarray(pos);
 	}
+	    
+	    
+	    public static void printarray(int[][] array){
+	    	
+	    	for(int i = 0; i<array.length;i++){
+	    		for(int j = 0; j<array[0].length;j++){
+	    			
+	    			System.out.print(array[i][j]+" ");
+	    		}
+	    		System.out.print("\n");
+	    	}
+	    }
 	    
 	    public static void spliting (int rows, int cols, int splitWidth, int splitHeight, BufferedImage image, BufferedImage[][] imgs) throws IOException {
 	    	for (int x = 0; x < rows; x++) {
@@ -168,34 +194,27 @@ public class TestSplit {
 	    }
 	    
 	    
-	  /*  public static void printimg(BufferedImage img, JFrame frame){
-	    	int imgwidth,imgheigth;
-	    	imgwidth=img.getWidth();
-	    	imgheigth=img.getHeight();
-	    	frame.getContentPane().setLayout(new FlowLayout());
-	    	frame.getContentPane().add(new JLabel(new ImageIcon(img)));
-	    	frame.setSize(imgwidth+30, imgheigth+50);
-	    	frame.setVisible(true);
-	    	
-	    }
-	    */
-	    public static void moveleft(int[][] array){
-	    	
+	    public static void moveleft(BufferedImage [][] array, int[][] intarray){
+	    	int width=array[0][0].getWidth();
+   	        int height=array[0][0].getHeight();
+	    	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	    	int ibuff = 0, jbuff = 0;
+	    	 System.out.println("Array length: "+array[1].length);
 	    	for(int i = 0; i<array.length; i ++){
-	    		for(int j = 0; i<array[i].length; j++){
-	    			if(array[i][j] == 0){
+	    		for(int j = 0; j<array[i].length-1; j++){	 
+	    			if(compareminimg(array[i][j],imag)){
 	    				ibuff = i;
 	    				jbuff = j;
 	    			}
 	    		}
 	    	}
-	    	array[ibuff][jbuff] = array[ibuff-1][jbuff];
-	    	array[ibuff-1][jbuff] = 0;
-	    	//Aqui se cambia la imagen displayeada
+	    	array[ibuff][jbuff] = array[ibuff][jbuff-1];
+	    	array[ibuff][jbuff-1] = imag;
+	    	intarray[ibuff][jbuff] = intarray[ibuff][jbuff-1];
+	    	intarray[ibuff][jbuff-1] = 0;
 	    }
 	    
-	    public static void moveright(BufferedImage [][] array){
+	    public static void moveright(BufferedImage [][] array, int[][] intarray){
 	    	int width=array[0][0].getWidth();
    	        int height=array[0][0].getHeight();
 	    	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -211,43 +230,50 @@ public class TestSplit {
 	    	}
 	    	array[ibuff][jbuff] = array[ibuff][jbuff+1];
 	    	array[ibuff][jbuff+1] = imag;
+	    	intarray[ibuff][jbuff] = intarray[ibuff][jbuff+1];
+	    	intarray[ibuff][jbuff+1] = 0;
 	    }
 	    
-	    public static void moveup(int[][] array){
-	    	
+	    public static void moveup(BufferedImage [][] array, int[][] intarray){
+	    	int width=array[0][0].getWidth();
+   	        int height=array[0][0].getHeight();
+	    	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	    	int ibuff = 0, jbuff = 0;
+	    	 System.out.println("Array length: "+array[1].length);
 	    	for(int i = 0; i<array.length; i ++){
-	    		for(int j = 0; i<array[0].length; j++){
-	    			if(array[i][j] == 0){
+	    		for(int j = 0; j<array[i].length-1; j++){	 
+	    			if(compareminimg(array[i][j],imag)){
 	    				ibuff = i;
 	    				jbuff = j;
 	    			}
 	    		}
 	    	}
-	    	array[ibuff][jbuff] = array[ibuff][jbuff+1];
-	    	array[ibuff][jbuff+1] = 0;
-	    	//Aqui se cambia la imagen displayeada
+	    	array[ibuff][jbuff] = array[ibuff-1][jbuff];
+	    	array[ibuff-1][jbuff] = imag;
+	    	intarray[ibuff][jbuff] = intarray[ibuff-1][jbuff];
+	    	intarray[ibuff-1][jbuff] = 0;
 	    }
 	    
 	    
-	    public static void movedown(BufferedImage[][] array){
-	         int width=array[0][0].getWidth(); // no sería mejor llamar width y height?
-	         int height=array[0][0].getHeight();
-	         BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-	         int ibuff = 0, jbuff = 0;
-	         System.out.println("Array length: "+array[1].length);
-	         
-	         for(int i = 0; i<array.length; i ++){
-	          for(int j = 0; j<array[i].length-1; j++){  
-	           if(compareminimg(array[i][j], imag)){
-	         ibuff = i;
-	         jbuff = j;
-	        }
-	       }
-	      }
-	      array[ibuff][jbuff] = array[ibuff][jbuff-1];
-	      array[ibuff][jbuff-1] = imag;
-	      //Aqui se cambia la imagen displayeada
-	     }
+	    public static void movedown(BufferedImage [][] array, int[][] intarray){
+	    	
+	    	int width=array[0][0].getWidth();
+   	        int height=array[0][0].getHeight();
+	    	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+	    	int ibuff = 0, jbuff = 0;
+	    	 System.out.println("Array length: "+array[1].length);
+	    	for(int i = 0; i<array.length; i ++){
+	    		for(int j = 0; j<array[i].length-1; j++){	 
+	    			if(compareminimg(array[i][j],imag)){
+	    				ibuff = i;
+	    				jbuff = j;
+	    			}
+	    		}
+	    	}
+	    	array[ibuff][jbuff] = array[ibuff+1][jbuff];
+	    	array[ibuff+1][jbuff] = imag;
+	    	intarray[ibuff][jbuff] = intarray[ibuff+1][jbuff];
+	    	intarray[ibuff+1][jbuff] = 0;
+	    }
 	    
 }
