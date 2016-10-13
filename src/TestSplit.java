@@ -17,6 +17,7 @@ public class TestSplit {
 	    	JFrame frame = new JFrame();
 	        File file = new File("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/AlhambraInicialPuzzle4x4.png"); // I have cat.jpg in my working directory (1080x820) [empieza en el p 30]
 	        File file2 = new File ("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/IntermedioAlhambra41.png");
+	        
 	        FileInputStream img = new FileInputStream(file);
 	        FileInputStream img2 = new FileInputStream(file2);
 	        BufferedImage image = ImageIO.read(img); //reading the image file
@@ -33,7 +34,7 @@ public class TestSplit {
 	        System.out.println(ImgHeight);
 	        System.out.println(splitHeight);
 	        
-	       /* 
+	       
 	        BufferedImage imgs[][] = new BufferedImage[rows][cols]; //Image array to hold image chunks
 	        BufferedImage imgs2[][] = new BufferedImage[rows][cols];
 	        
@@ -44,29 +45,29 @@ public class TestSplit {
 	        spliting(rows, cols, splitWidth, splitHeight, image, imgs);
 	        spliting(rows, cols, splitWidth, splitHeight, image2, imgs2);
 	        compareimgs(imgs, imgs2);
-	        createfirstblackimg(imgs);
+	        //createfirstblackimg(imgs);
 	        //showimage(imgs2, ImgWidth, ImgHeight);
 	        
-	        p.printimg(mergeimg(imgs, ImgWidth, ImgHeight,rows,cols));
+	        p.printimg(mergeimg(imgs2, ImgWidth, ImgHeight,rows,cols));
 	        findpos(imgs, imgs2, pos);
 	        printarray(pos);
 	        
-	        moveright(imgs, pos);
-	        p.printimg(mergeimg(imgs, ImgWidth, ImgHeight,rows,cols));
+	        moveleft(imgs2, pos);
+	        p.printimg(mergeimg(imgs2, ImgWidth, ImgHeight,rows,cols));
 	        printarray(pos);
 	        
-	        moveleft(imgs, pos);
-	        p.printimg(mergeimg(imgs, ImgWidth, ImgHeight,rows,cols));
+	        moveright(imgs2, pos);
+	        p.printimg(mergeimg(imgs2, ImgWidth, ImgHeight,rows,cols));
 	        printarray(pos);
 	        
-	        movedown(imgs,pos);
-	        p.printimg(mergeimg(imgs, ImgWidth, ImgHeight,rows,cols));
+	        movedown(imgs2,pos);
+	        p.printimg(mergeimg(imgs2, ImgWidth, ImgHeight,rows,cols));
 	        printarray(pos);
 	        
-	        moveup(imgs,pos);
-	        p.printimg(mergeimg(imgs, ImgWidth, ImgHeight,rows,cols));
+	        moveup(imgs2,pos);
+	        p.printimg(mergeimg(imgs2, ImgWidth, ImgHeight,rows,cols));
 	        printarray(pos);
-	        */
+	        
 	}
 	    public static int calcrows(BufferedImage img){
 	    	int n=0;
@@ -230,12 +231,13 @@ public class TestSplit {
    	        int height=array[0][0].getHeight();
 	    	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	    	int ibuff = 0, jbuff = 0;
-	    	 System.out.println("Array length: "+array[1].length);
+	    	outerloop:
 	    	for(int i = 0; i<array.length; i ++){
-	    		for(int j = 0; j<array[i].length-1; j++){	 
+	    		for(int j = 0; j<array[i].length; j++){	 
 	    			if(compareminimg(array[i][j],imag)){
 	    				ibuff = i;
 	    				jbuff = j;
+	    				break outerloop;
 	    			}
 	    		}
 	    	}
@@ -249,14 +251,16 @@ public class TestSplit {
 	    	int width=array[0][0].getWidth();
    	        int height=array[0][0].getHeight();
 	    	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-	    	int ibuff = 0, jbuff = 0;
-	    	 System.out.println("Array length: "+array[1].length);
+	    	int ibuff=0, jbuff=0;
+	    	outerloop:
 	    	for(int i = 0; i<array.length; i ++){
-	    		for(int j = 0; j<array[i].length-1; j++){	 
+	    		for(int j = 0; j<array[i].length; j++){	 
 	    			if(compareminimg(array[i][j],imag)){
 	    				ibuff = i;
 	    				jbuff = j;
-	    			}
+	    				break outerloop;
+	    				}
+	    			System.out.println("La imagen negra esta en i: "+i+" y la j: "+j);
 	    		}
 	    	}
 	    	array[ibuff][jbuff] = array[ibuff][jbuff+1];
@@ -270,12 +274,13 @@ public class TestSplit {
    	        int height=array[0][0].getHeight();
 	    	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	    	int ibuff = 0, jbuff = 0;
-	    	 System.out.println("Array length: "+array[1].length);
+	    	outerloop:
 	    	for(int i = 0; i<array.length; i ++){
-	    		for(int j = 0; j<array[i].length-1; j++){	 
+	    		for(int j = 0; j<array[i].length; j++){	 
 	    			if(compareminimg(array[i][j],imag)){
 	    				ibuff = i;
 	    				jbuff = j;
+	    				break outerloop;
 	    			}
 	    		}
 	    	}
@@ -292,12 +297,13 @@ public class TestSplit {
    	        int height=array[0][0].getHeight();
 	    	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	    	int ibuff = 0, jbuff = 0;
-	    	 System.out.println("Array length: "+array[1].length);
+	    	outerloop:
 	    	for(int i = 0; i<array.length; i ++){
-	    		for(int j = 0; j<array[i].length-1; j++){	 
+	    		for(int j = 0; j<array[i].length; j++){	 
 	    			if(compareminimg(array[i][j],imag)){
 	    				ibuff = i;
 	    				jbuff = j;
+	    				break outerloop;
 	    			}
 	    		}
 	    	}
