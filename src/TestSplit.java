@@ -15,20 +15,25 @@ public class TestSplit {
 	    public static void main(String[] args) throws IOException {
 	    	Puzzle p = new Puzzle();
 	    	JFrame frame = new JFrame();
-	        File file = new File("C:/Users/Carlos/workspace/Game/pics/alhambra.png"); // I have cat.jpg in my working directory (1080x820) [empieza en el p 30]
-	        File file2 = new File ("C:/Users/Carlos/workspace/Game/pics/alhambra.png");
+	        File file = new File("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/AlhambraInicialPuzzle4x4.png"); // I have cat.jpg in my working directory (1080x820) [empieza en el p 30]
+	        File file2 = new File ("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/IntermedioAlhambra41.png");
 	        FileInputStream img = new FileInputStream(file);
 	        FileInputStream img2 = new FileInputStream(file2);
 	        BufferedImage image = ImageIO.read(img); //reading the image file
 	        BufferedImage image2 = ImageIO.read(img2);
 
-	        int rows = 4; //You should decide the values for rows and cols variables
-	        int cols = 4;
+	        int rows =calcrows(image); //You should decide the values for rows and cols variables
+	        int cols = calcols(image);
 	        
 	        int ImgWidth = image.getWidth();
 	        int ImgHeight = image.getHeight();
 	        int splitWidth = ImgWidth / cols; // determines the chunk width and height
+	       
 	        int splitHeight = ImgHeight / rows;
+	        System.out.println(ImgHeight);
+	        System.out.println(splitHeight);
+	        
+	       /* 
 	        BufferedImage imgs[][] = new BufferedImage[rows][cols]; //Image array to hold image chunks
 	        BufferedImage imgs2[][] = new BufferedImage[rows][cols];
 	        
@@ -61,8 +66,34 @@ public class TestSplit {
 	        moveup(imgs,pos);
 	        p.printimg(mergeimg(imgs, ImgWidth, ImgHeight,rows,cols));
 	        printarray(pos);
+	        */
 	}
+	    public static int calcrows(BufferedImage img){
+	    	int n=0;
+	    	int i;
+	    	BufferedImage imag = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+	    	for(i=0;i<img.getHeight();i++){
+	    		 if (img.getRGB(0,i) != imag.getRGB(0, 0)) {
+	    			 break;
+	    		 }
+	    		 n++;
+	    	}
+	    	 System.out.println(n);
+	    	return img.getHeight()/n;
+	    }
 	    
+	    public static int calcols(BufferedImage img){
+	    	int n=0;
+	    	int i;
+	    	BufferedImage imag = new BufferedImage(1, 1, BufferedImage.TYPE_INT_RGB);
+	    	for(i=0;i<img.getWidth();i++){	    		
+	    		 if (img.getRGB(i,0) != imag.getRGB(0, 0)) {
+	    			 break;
+	    		 }
+	    		 n++;
+	    	}
+	    	return img.getWidth()/n;
+	    }
 	    
 	    public static void printarray(int[][] array){
 	    	
