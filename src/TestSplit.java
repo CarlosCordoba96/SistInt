@@ -14,34 +14,19 @@ public class TestSplit {
 
 	    public static void main(String[] args) throws IOException {
 	    	Puzzle p = new Puzzle();
-	    	JFrame frame = new JFrame();
-	        File file = new File("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/AlhambraInicialPuzzle4x4.png"); // I have cat.jpg in my working directory (1080x820) [empieza en el p 30]
-	        File file2 = new File ("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/IntermedioAlhambra41.png");
+	    	JFrame frame = new JFrame();	        
+	        BufferedImage image = chargeimage("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/AlhambraInicialPuzzle4x4.png"); //reading the image file
+	        BufferedImage image2 = chargeimage("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/IntermedioAlhambra41.png");
 	        
-	        FileInputStream img = new FileInputStream(file);
-	        FileInputStream img2 = new FileInputStream(file2);
-	        BufferedImage image = ImageIO.read(img); //reading the image file
-	        BufferedImage image2 = ImageIO.read(img2);
-
 	        int rows =calcrows(image); //You should decide the values for rows and cols variables
-	        int cols = calcols(image);
-	        
+	        int cols = calcols(image);	        
 	        int ImgWidth = image.getWidth();
 	        int ImgHeight = image.getHeight();
-	        int splitWidth = ImgWidth / cols; // determines the chunk width and height
-	       
-	        int splitHeight = ImgHeight / rows;
-	        System.out.println(ImgHeight);
-	        System.out.println(splitHeight);
-	        
-	       
+	        int splitWidth = ImgWidth / cols; // determines the chunk width and height       
+	        int splitHeight = ImgHeight / rows;	       
 	        BufferedImage imgs[][] = new BufferedImage[rows][cols]; //Image array to hold image chunks
-	        BufferedImage imgs2[][] = new BufferedImage[rows][cols];
-	        
-	        int pos[][] = new int [rows][cols];
-	        
-	  
-	        
+	        BufferedImage imgs2[][] = new BufferedImage[rows][cols];	        
+	        int pos[][] = new int [rows][cols];        
 	        spliting(rows, cols, splitWidth, splitHeight, image, imgs);
 	        spliting(rows, cols, splitWidth, splitHeight, image2, imgs2);
 	        compareimgs(imgs, imgs2);
@@ -69,6 +54,21 @@ public class TestSplit {
 	        printarray(pos);
 	        
 	}
+	    /*
+	     * 
+	     * Method to read the images from files
+	     */
+	    public static BufferedImage chargeimage(String trace) throws IOException{
+	    	File file = new File("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/AlhambraInicialPuzzle4x4.png"); // I have cat.jpg in my working directory (1080x820) [empieza en el p 30]
+	        FileInputStream img = new FileInputStream(file);
+	        BufferedImage image = ImageIO.read(img); //reading the image file
+	        return image;
+	    }
+	    /*
+	     * 
+	     * Calculate the nº of rows of the image
+	     */
+	    
 	    public static int calcrows(BufferedImage img){
 	    	int n=0;
 	    	int i;
@@ -82,7 +82,9 @@ public class TestSplit {
 	    	 System.out.println(n);
 	    	return img.getHeight()/n;
 	    }
-	    
+	    /*
+	     * Calculate the nº of cols of the image
+	     */
 	    public static int calcols(BufferedImage img){
 	    	int n=0;
 	    	int i;
@@ -107,6 +109,9 @@ public class TestSplit {
 	    	}
 	    }
 	    
+	    /*
+	     * Split the image and store each sub-image in each position of the array
+	     */
 	    public static void spliting (int rows, int cols, int splitWidth, int splitHeight, BufferedImage image, BufferedImage[][] imgs) throws IOException {
 	    	for (int x = 0; x < rows; x++) {
 	            for (int y = 0; y < cols; y++) {
@@ -131,7 +136,9 @@ public class TestSplit {
 	        }
 	        System.out.println("Mini images created");
 	    }
-	    
+	    /*
+	     * Create from the original image a black image in the first position of the array created
+	     */
 	    public static void createfirstblackimg (BufferedImage[][] imgs) {//crea el primer recuadro negro
 		        	    int width;
 		       	        int height;
@@ -141,7 +148,9 @@ public class TestSplit {
 		       	        imgs[0][0] = imag;					//Posiblemente hacer todo método para meter la primera entrada en negro.
 		       	        
 	    }
-	    
+	    /*
+	     * We compare 2 images
+	     */
 	    public static boolean compareminimg (BufferedImage img1, BufferedImage img2){//COMPARAR DOS IMAGENES
 	    	
 	    	if (img1.getWidth() != img2.getWidth() || img1.getHeight()!= img2.getHeight()) {
@@ -157,7 +166,9 @@ public class TestSplit {
 	       }
 	       return true;
 	    }
-	    
+	    /*
+	     * We compare 2 arrays of images
+	     */
 	    public static void compareimgs (BufferedImage[][] img, BufferedImage[][] img2) {		//PARA RESULTADO FINAL!
 	    	boolean result = true; 
 		    	outerloop:
@@ -172,7 +183,9 @@ public class TestSplit {
 		    	}
 	    	if (result) System.out.println("Both images are equal.");
 	    }
-	    
+	    /*
+	     * We calculate the position of the image comparing the clear one
+	     */
 	    public static void findpos (BufferedImage[][] img, BufferedImage[][] img2, int [][] pos) {
 	    	boolean position;
 	    	for (int i = 0; i < img.length; i++) {
@@ -193,12 +206,12 @@ public class TestSplit {
 				}
 			}
 	    }   
-	    
+	    /*
+	     * We create the full image from the BufferedImage array
+	     */
 	    public static BufferedImage mergeimg (BufferedImage[][] img, int width, int height, int rows, int cols) throws IOException {//JUNTA LA MATRIZ EN UNA IMAGEN 
 	    	 BufferedImage resimg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	    	 Graphics g = resimg.getGraphics();
-	    	 int imgwidth;
-	    	 int imgheigth;
 	    	 int x=0; int y=0;
 	    	 int i=0;
 	    	 int j=0;
@@ -225,7 +238,9 @@ public class TestSplit {
 		    	return resimg;
 	    }
 	    
-	    
+	    /*
+	     * Move to the left the black image
+	     */
 	    public static void moveleft(BufferedImage [][] array, int[][] intarray){
 	    	int width=array[0][0].getWidth();
    	        int height=array[0][0].getHeight();
@@ -246,7 +261,9 @@ public class TestSplit {
 	    	intarray[ibuff][jbuff] = intarray[ibuff][jbuff-1];
 	    	intarray[ibuff][jbuff-1] = 0;
 	    }
-	    
+	    /*
+	     * Move to the right the black image
+	     */
 	    public static void moveright(BufferedImage [][] array, int[][] intarray){
 	    	int width=array[0][0].getWidth();
    	        int height=array[0][0].getHeight();
@@ -268,7 +285,9 @@ public class TestSplit {
 	    	intarray[ibuff][jbuff] = intarray[ibuff][jbuff+1];
 	    	intarray[ibuff][jbuff+1] = 0;
 	    }
-	    
+	    /*
+	     * Move up the black image
+	     */
 	    public static void moveup(BufferedImage [][] array, int[][] intarray){
 	    	int width=array[0][0].getWidth();
    	        int height=array[0][0].getHeight();
@@ -290,7 +309,9 @@ public class TestSplit {
 	    	intarray[ibuff-1][jbuff] = 0;
 	    }
 	    
-	    
+	    /*
+	     * Move down the black image
+	     */
 	    public static void movedown(BufferedImage [][] array, int[][] intarray){
 	    	
 	    	int width=array[0][0].getWidth();
