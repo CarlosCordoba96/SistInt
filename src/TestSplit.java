@@ -59,7 +59,7 @@ public class TestSplit {
 	     * Method to read the images from files
 	     */
 	    public static BufferedImage chargeimage(String trace) throws IOException{
-	    	File file = new File("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/AlhambraInicialPuzzle4x4.png"); // I have cat.jpg in my working directory (1080x820) [empieza en el p 30]
+	    	File file = new File(trace); // I have cat.jpg in my working directory (1080x820) [empieza en el p 30]
 	        FileInputStream img = new FileInputStream(file);
 	        BufferedImage image = ImageIO.read(img); //reading the image file
 	        return image;
