@@ -14,7 +14,7 @@ public class TestSplit {
 
 	    public static void main(String[] args) throws IOException {
 	    	init();
-	        
+     
 	}
 	    public static void init() throws IOException{
 	    	Puzzle p = new Puzzle();
@@ -27,7 +27,8 @@ public class TestSplit {
 	        int ImgWidth = image.getWidth();
 	        int ImgHeight = image.getHeight();
 	        int splitWidth = ImgWidth / cols; // determines the chunk width and height       
-	        int splitHeight = ImgHeight / rows;	       
+	        int splitHeight = ImgHeight / rows;
+	        
 	        BufferedImage imgs[][] = new BufferedImage[rows][cols]; //Image array to hold image chunks
 	        BufferedImage imgs2[][] = new BufferedImage[rows][cols];	        
 	        int pos[][] = new int [rows][cols]; 
@@ -65,7 +66,7 @@ public class TestSplit {
 	     * Method to read the images from files
 	     */
 	    public static BufferedImage chargeimage(String trace) throws IOException{
-	    	File file = new File(trace); // I have cat.jpg in my working directory (1080x820) [empieza en el p 30]
+	    	File file = new File(trace); 
 	        FileInputStream img = new FileInputStream(file);
 	        BufferedImage image = ImageIO.read(img); //reading the image file
 	        return image;
@@ -150,13 +151,13 @@ public class TestSplit {
 		       	        width=imgs[0][0].getWidth();
 		       	        height=imgs[0][0].getHeight();
 		       	        BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		       	        imgs[0][0] = imag;					//Posiblemente hacer todo método para meter la primera entrada en negro.
+		       	        imgs[0][0] = imag;					
 		       	        
 	    }
 	    /*
 	     * We compare 2 images
 	     */
-	    public static boolean compareminimg (BufferedImage img1, BufferedImage img2){//COMPARAR DOS IMAGENES
+	    public static boolean compareminimg (BufferedImage img1, BufferedImage img2){//COMPARE 2 IMAGES
 	    	
 	    	if (img1.getWidth() != img2.getWidth() || img1.getHeight()!= img2.getHeight()) {
 	            return false;
@@ -170,7 +171,8 @@ public class TestSplit {
 	                }
 	           }
 	       }
-	       return (((npixels-nep)/npixels)>0.95);
+	       return (((npixels-nep)/npixels)>0.95);//IF THE IMAGE IS UNDER 95% OF SIMILARITY IS FALSE
+	      
 	    }
 	    /*
 	     * We compare 2 arrays of images
@@ -206,16 +208,11 @@ public class TestSplit {
 	    		}
 	    	}
 	    	
-			for (int k = 0; k < pos.length; k++) {
-				for (int z = 0; z < pos[k].length; z++) {
-					System.out.println(pos[k][z]);
-				}
-			}
 	    }   
 	    /*
 	     * We create the full image from the BufferedImage array
 	     */
-	    public static BufferedImage mergeimg (BufferedImage[][] img, int width, int height, int rows, int cols) throws IOException {//JUNTA LA MATRIZ EN UNA IMAGEN 
+	    public static BufferedImage mergeimg (BufferedImage[][] img, int width, int height, int rows, int cols) throws IOException {
 	    	 BufferedImage resimg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	    	 Graphics g = resimg.getGraphics();
 	    	 int x=0; int y=0;
@@ -223,25 +220,22 @@ public class TestSplit {
 	    	 int j=0;
 	    	    for (int k = 0; k < img.length; k++) {
 	    	    	for(int l=0;l<img[k].length ;l++){
-					BufferedImage bi =img[k][l];
-	    	        j++;
-	    	        if(j==cols){
-	    	        	i++;
-	    	        	j=0;
-	    	        }
-	    	        g.drawImage(bi, x, y, null);
-	    	      
-	    	        x += bi.getWidth();
-	    	        if(x == resimg.getWidth()){
-	    	            x = 0;
-	    	            y += bi.getHeight();
-	    	        }
+	    	    		BufferedImage bi =img[k][l];
+	    	    		j++;
+	    	    		if(j==cols){
+	    	    			i++;
+	    	    			j=0;
+	    	    		}
+	    	    		g.drawImage(bi, x, y, null);	    	      
+	    	    		x += bi.getWidth();
+	    	    		if(x == resimg.getWidth()){
+	    	    			x = 0;
+	    	    			y += bi.getHeight();
+	    	    		}
 	    	    	}
-				}
-	    	    
-	    	 ImageIO.write(resimg,"png",new File("result.png"));
-	    	 System.out.println("FINAL IMAGE CREATED");
-		    	return resimg;
+	    	    }	    
+	    	    ImageIO.write(resimg,"png",new File("result.png"));//MIX THE MATRIX IN JUST ONE IMAGE 
+		    return resimg;
 	    }
 	    
 	    /*
@@ -314,6 +308,7 @@ public static void movedown(BufferedImage [][] array, int[][] intarray, int[] po
     	poscero[0] = ibuff+1;
 	}
 }
+
 	public static void whereiszero(int [][] array, int[] cero){
 		for(int i=0;i<array.length;i++){
 			for(int j=0;j<array[i].length;j++){
@@ -324,5 +319,6 @@ public static void movedown(BufferedImage [][] array, int[][] intarray, int[] po
 			}
 		}
 	}
+	
 	
 }
