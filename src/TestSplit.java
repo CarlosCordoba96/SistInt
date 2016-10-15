@@ -13,6 +13,10 @@
 public class TestSplit {
 
 	    public static void main(String[] args) throws IOException {
+	    	init();
+	        
+	}
+	    public static void init() throws IOException{
 	    	Puzzle p = new Puzzle();
 	    	JFrame frame = new JFrame();	        
 	        BufferedImage image = chargeimage("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/AlhambraInicialPuzzle4x4.png"); //reading the image file
@@ -26,7 +30,9 @@ public class TestSplit {
 	        int splitHeight = ImgHeight / rows;	       
 	        BufferedImage imgs[][] = new BufferedImage[rows][cols]; //Image array to hold image chunks
 	        BufferedImage imgs2[][] = new BufferedImage[rows][cols];	        
-	        int pos[][] = new int [rows][cols];        
+	        int pos[][] = new int [rows][cols]; 
+	        int cero[]=new int[2];
+	        
 	        spliting(rows, cols, splitWidth, splitHeight, image, imgs);
 	        spliting(rows, cols, splitWidth, splitHeight, image2, imgs2);
 	        compareimgs(imgs, imgs2);
@@ -36,24 +42,24 @@ public class TestSplit {
 	        p.printimg(mergeimg(imgs2, ImgWidth, ImgHeight,rows,cols));
 	        findpos(imgs, imgs2, pos);
 	        printarray(pos);
+	        whereiszero(pos,cero);
 	        
-	        moveleft(imgs2, pos);
+	        moveleft(imgs2, pos,cero);
 	        p.printimg(mergeimg(imgs2, ImgWidth, ImgHeight,rows,cols));
 	        printarray(pos);
 	        
-	        moveright(imgs2, pos);
+	        moveright(imgs2, pos,cero);
 	        p.printimg(mergeimg(imgs2, ImgWidth, ImgHeight,rows,cols));
 	        printarray(pos);
 	        
-	        movedown(imgs2,pos);
+	        movedown(imgs2,pos,cero);
 	        p.printimg(mergeimg(imgs2, ImgWidth, ImgHeight,rows,cols));
 	        printarray(pos);
 	        
-	        moveup(imgs2,pos);
+	        moveup(imgs2,pos,cero);
 	        p.printimg(mergeimg(imgs2, ImgWidth, ImgHeight,rows,cols));
 	        printarray(pos);
-	        
-	}
+	    }
 	    /*
 	     * 
 	     * Method to read the images from files
@@ -79,7 +85,6 @@ public class TestSplit {
 	    		 }
 	    		 n++;
 	    	}
-	    	 System.out.println(n);
 	    	return img.getHeight()/n;
 	    }
 	    /*
@@ -156,15 +161,16 @@ public class TestSplit {
 	    	if (img1.getWidth() != img2.getWidth() || img1.getHeight()!= img2.getHeight()) {
 	            return false;
 	       }
-	    	int npixels= img1.getWidth() * img1.getHeight();
+	    	double npixels= img1.getWidth() * img1.getHeight();
+	    	double nep = 0.0;
 	       for (int x = 1; x < img2.getWidth(); x++) {
 	           for (int y = 1; y < img2.getHeight(); y++) {
 	                if (img1.getRGB(x, y) != img2.getRGB(x, y)) {
-	                    return false;
+	                    nep++;
 	                }
 	           }
 	       }
-	       return true;
+	       return (((npixels-nep)/npixels)>0.95);
 	    }
 	    /*
 	     * We compare 2 arrays of images
@@ -241,97 +247,82 @@ public class TestSplit {
 	    /*
 	     * Move to the left the black image
 	     */
-	    public static void moveleft(BufferedImage [][] array, int[][] intarray){
-	    	int width=array[0][0].getWidth();
-   	        int height=array[0][0].getHeight();
-	    	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-	    	int ibuff = 0, jbuff = 0;
-	    	outerloop:
-	    	for(int i = 0; i<array.length; i ++){
-	    		for(int j = 0; j<array[i].length; j++){	 
-	    			if(compareminimg(array[i][j],imag)){
-	    				ibuff = i;
-	    				jbuff = j;
-	    				break outerloop;
-	    			}
-	    		}
-	    	}
-	    	array[ibuff][jbuff] = array[ibuff][jbuff-1];
-	    	array[ibuff][jbuff-1] = imag;
-	    	intarray[ibuff][jbuff] = intarray[ibuff][jbuff-1];
-	    	intarray[ibuff][jbuff-1] = 0;
-	    }
-	    /*
-	     * Move to the right the black image
-	     */
-	    public static void moveright(BufferedImage [][] array, int[][] intarray){
-	    	int width=array[0][0].getWidth();
-   	        int height=array[0][0].getHeight();
-	    	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-	    	int ibuff=0, jbuff=0;
-	    	outerloop:
-	    	for(int i = 0; i<array.length; i ++){
-	    		for(int j = 0; j<array[i].length; j++){	 
-	    			if(compareminimg(array[i][j],imag)){
-	    				ibuff = i;
-	    				jbuff = j;
-	    				break outerloop;
-	    				}
-	    			System.out.println("La imagen negra esta en i: "+i+" y la j: "+j);
-	    		}
-	    	}
-	    	array[ibuff][jbuff] = array[ibuff][jbuff+1];
-	    	array[ibuff][jbuff+1] = imag;
-	    	intarray[ibuff][jbuff] = intarray[ibuff][jbuff+1];
-	    	intarray[ibuff][jbuff+1] = 0;
-	    }
-	    /*
-	     * Move up the black image
-	     */
-	    public static void moveup(BufferedImage [][] array, int[][] intarray){
-	    	int width=array[0][0].getWidth();
-   	        int height=array[0][0].getHeight();
-	    	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-	    	int ibuff = 0, jbuff = 0;
-	    	outerloop:
-	    	for(int i = 0; i<array.length; i ++){
-	    		for(int j = 0; j<array[i].length; j++){	 
-	    			if(compareminimg(array[i][j],imag)){
-	    				ibuff = i;
-	    				jbuff = j;
-	    				break outerloop;
-	    			}
-	    		}
-	    	}
-	    	array[ibuff][jbuff] = array[ibuff-1][jbuff];
-	    	array[ibuff-1][jbuff] = imag;
-	    	intarray[ibuff][jbuff] = intarray[ibuff-1][jbuff];
-	    	intarray[ibuff-1][jbuff] = 0;
-	    }
-	    
-	    /*
-	     * Move down the black image
-	     */
-	    public static void movedown(BufferedImage [][] array, int[][] intarray){
+public static void moveleft(BufferedImage [][] array, int[][] intarray, int[] poscero){
 	    	
 	    	int width=array[0][0].getWidth();
    	        int height=array[0][0].getHeight();
 	    	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-	    	int ibuff = 0, jbuff = 0;
-	    	outerloop:
-	    	for(int i = 0; i<array.length; i ++){
-	    		for(int j = 0; j<array[i].length; j++){	 
-	    			if(compareminimg(array[i][j],imag)){
-	    				ibuff = i;
-	    				jbuff = j;
-	    				break outerloop;
-	    			}
-	    		}
+	    	int ibuff = poscero[0], jbuff = poscero[1];
+	    	if(jbuff != 0){
+		    	array[ibuff][jbuff] = array[ibuff][jbuff-1];
+		    	array[ibuff][jbuff-1] = imag;
+		    	intarray[ibuff][jbuff] = intarray[ibuff][jbuff-1];
+		    	intarray[ibuff][jbuff-1] = 0;
+		    	poscero[1] = jbuff-1;
 	    	}
-	    	array[ibuff][jbuff] = array[ibuff+1][jbuff];
-	    	array[ibuff+1][jbuff] = imag;
-	    	intarray[ibuff][jbuff] = intarray[ibuff+1][jbuff];
-	    	intarray[ibuff+1][jbuff] = 0;
 	    }
+	    /*
+	     * Move to the right the black image
+	     */
+public static void moveright(BufferedImage [][] array, int[][] intarray, int[] poscero){
+	int width=array[0][0].getWidth();
+       int height=array[0][0].getHeight();
+	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+	int ibuff = poscero[0], jbuff = poscero[1];
+	
+	if(jbuff < width-1){
+    	array[ibuff][jbuff] = array[ibuff][jbuff+1];
+    	array[ibuff][jbuff+1] = imag;
+    	intarray[ibuff][jbuff] = intarray[ibuff][jbuff+1];
+    	intarray[ibuff][jbuff+1] = 0;
+    	poscero[1] = jbuff+1;
+	}
+}
+	    /*
+	     * Move up the black image
+	     */
+public static void moveup(BufferedImage [][] array, int[][] intarray, int[] poscero){
+	int width=array[0][0].getWidth();
+       int height=array[0][0].getHeight();
+	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+	int ibuff = poscero[0], jbuff = poscero[1];
+	
+	if(ibuff != 0){
+    	array[ibuff][jbuff] = array[ibuff-1][jbuff];
+    	array[ibuff-1][jbuff] = imag;
+    	intarray[ibuff][jbuff] = intarray[ibuff-1][jbuff];
+    	intarray[ibuff-1][jbuff] = 0;
+    	poscero[0] = ibuff-1;
+	}
+}
 	    
+	    /*
+	     * Move down the black image
+	     */
+public static void movedown(BufferedImage [][] array, int[][] intarray, int[] poscero){
+	
+	int width=array[0][0].getWidth();
+       int height=array[0][0].getHeight();
+	BufferedImage imag = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+	int ibuff = poscero[0], jbuff = poscero[1];
+	
+	if(ibuff < height-1){
+    	array[ibuff][jbuff] = array[ibuff+1][jbuff];
+    	array[ibuff+1][jbuff] = imag;
+    	intarray[ibuff][jbuff] = intarray[ibuff+1][jbuff];
+    	intarray[ibuff+1][jbuff] = 0;
+    	poscero[0] = ibuff+1;
+	}
+}
+	public static void whereiszero(int [][] array, int[] cero){
+		for(int i=0;i<array.length;i++){
+			for(int j=0;j<array[i].length;j++){
+				if(array[i][j]==0){
+					cero[0]=i;
+					cero[1]=j;
+				}
+			}
+		}
+	}
+	
 }
