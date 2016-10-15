@@ -9,7 +9,9 @@
 	import java.io.*;
 	import java.awt.*;
 
-
+/**
+ * @author Alvaro Angel-Moreno Pinilla, Carlos Córdoba Ruiz & Roberto Plaza Romero
+ */
 public class TestSplit {
 
 	    public static void main(String[] args) throws IOException {
