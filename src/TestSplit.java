@@ -24,8 +24,8 @@ public class TestSplit {
 		 * 
 		 * Cambios necesarios:
 		 * 1º: Nosotros le pasamos el tamaño de la imagen LISTO
-		 * 2º Con el vector cero sabemos siempre la posicion de la imagen 0
-		 * 3º Tenemos que devolver las posibles acciones que podemos hacer, no comprobarlo antes de mover
+		 * 2º Con el vector cero sabemos siempre la posicion de la imagen 0 LISTO
+		 * 3º Tenemos que devolver las posibles acciones que podemos hacer, no comprobarlo antes de mover LISTO
 		 */
 		Puzzle p = new Puzzle();
 		JFrame frame = new JFrame();	        
@@ -299,22 +299,24 @@ public class TestSplit {
 			}
 		}
 	}
-	
+
 	public static ArrayList<Character> posiblemov(int[] cero,int rows, int cols){
-		 ArrayList<Character> movements = new ArrayList<Character>();
-		 if(ispossUp(cero)){
-			 movements.add('u');
-		 }else if(ispossDown(cero,rows)){
-			 movements.add('d');
-		 }else if(ispossLeft(cero,cols)){
-			 movements.add('l');
-		 }else if(ispossRight(cero,cols)){
-			 movements.add('r');
-		 }
-		
+		ArrayList<Character> movements = new ArrayList<Character>();
+		if(ispossUp(cero)){
+			movements.add('u');
+		}
+		if(ispossDown(cero,rows)){
+			movements.add('d');
+		}
+		if(ispossLeft(cero,cols)){
+			movements.add('l');
+		}
+		if(ispossRight(cero,cols)){
+			movements.add('r');
+		}
 		return movements;
 	}
-	
+
 	public static boolean ispossUp(int[] cero){
 		boolean posible=false;
 		if(cero[0]!=0){
@@ -343,6 +345,6 @@ public class TestSplit {
 		}
 		return posible;
 	}
-	
-	
+
+
 }
