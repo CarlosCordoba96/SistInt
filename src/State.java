@@ -4,7 +4,12 @@ public class State {
 	private int n_rows;
 	private int n_cols;
 	private int [] cero;
-	public State(){
+	private int [] puzzle;
+	public State(int n_rows, int n_cols, int [] cero, int [] puzzle){
+		this.n_rows=n_rows;
+		this.n_cols=n_cols;
+		this.cero=cero;
+		this.puzzle=puzzle;
 		
 	}
 	/*

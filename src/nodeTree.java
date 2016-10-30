@@ -11,8 +11,10 @@ public class nodeTree {
 		this.action=action;
 
 	}
-	public nodeTree(){
-		
+	public nodeTree(State state){
+		this.parent=null;
+		this.state=state;
+		this.partialCost=0;
 
 	}
 }
