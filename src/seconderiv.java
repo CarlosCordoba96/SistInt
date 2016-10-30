@@ -82,7 +82,7 @@ public class seconderiv {
 				time_end = System.currentTimeMillis();
 				 System.out.println("Iteration nº: " +nite + ". Nodes that have been created: " + ngen + ""
 				 		+ " , time consumed in the iteration " + (time_end-time_start) + ", time since we started"
-				 				+ "creating the nodes " + (time_end-time)/100);
+				 				+ "creating the nodes " + (time_end-time)/1000);
 			}
 	}
 	/*
