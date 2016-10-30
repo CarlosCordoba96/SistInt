@@ -3,7 +3,7 @@ import java.util.Random;
 public class nodeTree {
 	private nodeTree parent;
     State state;
-	private int partialCost;
+	private float partialCost;
 	private char action;
 	private float value;
 	private Random rndGenerator = new Random();
@@ -22,10 +22,10 @@ public class nodeTree {
 
 	}
 	public int getTotalCost(){
-		 if(!(this.parent==null)){
-			   return this.partialCost+this.parent.getTotalCost();
+		 if((this.parent!=null)){
+			   return (int) (this.partialCost+this.parent.getTotalCost());
 			  }else{
-			   return this.partialCost;
+			   return (int) value;
 			  }
 	}
 	public nodeTree getParent() {
@@ -41,7 +41,7 @@ public class nodeTree {
 		this.state = state;
 	}
 	public int getPartialCost() {
-		return partialCost;
+		return (int) partialCost;
 	}
 	public void setPartialCost(int partialCost) {
 		this.partialCost = partialCost;
