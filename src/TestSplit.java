@@ -8,6 +8,7 @@ import java.awt.image.PixelGrabber;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Stack;
 import java.awt.*;
 
 /**
@@ -20,30 +21,22 @@ public class TestSplit {
 
 	}
 	public static void init() throws IOException{
-		/*
-		 * 
-		 * Cambios necesarios:
-		 * 1º: Nosotros le pasamos el tamaño de la imagen LISTO
-		 * 2º Con el vector cero sabemos siempre la posicion de la imagen 0 LISTO
-		 * 3º Tenemos que devolver las posibles acciones que podemos hacer, no comprobarlo antes de mover LISTO
-		 */
 		Puzzle p = new Puzzle();
 		JFrame frame = new JFrame();	        
 		BufferedImage image = chargeimage("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/AlhambraInicialPuzzle4x4.png"); //reading the image file
 		BufferedImage image2 = chargeimage("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/IntermedioAlhambra41.png");
-
 		int rows =4; //You should decide the values for rows and cols variables
 		int cols = 4;	        
 		int ImgWidth = image.getWidth();
 		int ImgHeight = image.getHeight();
 		int splitWidth = ImgWidth / cols; // determines the chunk width and height       
 		int splitHeight = ImgHeight / rows;
-
 		BufferedImage imgs[][] = new BufferedImage[rows][cols]; //Image array to hold image chunks
 		BufferedImage imgs2[][] = new BufferedImage[rows][cols];	        
 		int pos[][] = new int [rows][cols]; 
 		int cero[]=new int[2];
 
+		
 		spliting(rows, cols, splitWidth, splitHeight, image, imgs);
 		spliting(rows, cols, splitWidth, splitHeight, image2, imgs2);
 		compareimgs(imgs, imgs2);
@@ -54,11 +47,13 @@ public class TestSplit {
 		findpos(imgs, imgs2, pos);
 		printarray(pos);
 		whereiszero(pos,cero);
+		printposiblemov(posiblemov(cero,rows,cols));
 
 		moveleft(imgs2, pos,cero);
 		p.printimg(mergeimg(imgs2, ImgWidth, ImgHeight,rows,cols));
 		printarray(pos);
-
+		printposiblemov(posiblemov(cero,rows,cols));
+/*
 		moveright(imgs2, pos,cero);
 		p.printimg(mergeimg(imgs2, ImgWidth, ImgHeight,rows,cols));
 		printarray(pos);
@@ -70,6 +65,7 @@ public class TestSplit {
 		moveup(imgs2,pos,cero);
 		p.printimg(mergeimg(imgs2, ImgWidth, ImgHeight,rows,cols));
 		printarray(pos);
+		*/
 	}
 	/*
 	 * 
@@ -81,8 +77,6 @@ public class TestSplit {
 		BufferedImage image = ImageIO.read(img); //reading the image file
 		return image;
 	}
-
-
 	public static void printarray(int[][] array){
 
 		for(int i = 0; i<array.length;i++){
@@ -110,16 +104,6 @@ public class TestSplit {
 				gr.dispose();
 			}
 		}
-		System.out.println("Splitting done");
-
-		//writing mini images into image files
-		for (int i = 0; i < imgs.length; i++) {
-			for (int j = 0; j < imgs[i].length; j++) {
-				ImageIO.write(imgs[i][j], "png", new File("img" + i +""+ j + ".png"));
-				//En este bucle se pueden imprimir las im�genes una a una
-			}
-		}
-		System.out.println("Mini images created");
 	}
 	/*
 	 * Create from the original image a black image in the first position of the array created
@@ -213,7 +197,7 @@ public class TestSplit {
 				}
 			}
 		}	    
-		ImageIO.write(resimg,"png",new File("result.png"));//MIX THE MATRIX IN JUST ONE IMAGE 
+		//ImageIO.write(resimg,"png",new File("result.png"));//MIX THE MATRIX IN JUST ONE IMAGE 
 		return resimg;
 	}
 
@@ -300,21 +284,26 @@ public class TestSplit {
 		}
 	}
 
-	public static ArrayList<Character> posiblemov(int[] cero,int rows, int cols){
-		ArrayList<Character> movements = new ArrayList<Character>();
+	public static Stack<Character> posiblemov(int[] cero,int rows, int cols){
+		Stack<Character> movements = new Stack<Character>();
 		if(ispossUp(cero)){
-			movements.add('u');
+			movements.push('u');
 		}
 		if(ispossDown(cero,rows)){
-			movements.add('d');
+			movements.push('d');
 		}
 		if(ispossLeft(cero,cols)){
-			movements.add('l');
+			movements.push('l');
 		}
 		if(ispossRight(cero,cols)){
-			movements.add('r');
+			movements.push('r');
 		}
 		return movements;
+	}
+	public static void printposiblemov(Stack ce){
+		while(ce.size()!=0){
+			System.out.println(ce.pop());
+		}
 	}
 
 	public static boolean ispossUp(int[] cero){

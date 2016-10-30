@@ -31,6 +31,7 @@ public class Puzzle {
 	}
 	
 	public void printimg(BufferedImage img){
+		
 		frame.getContentPane().removeAll();
     	int imgwidth,imgheigth;
     	imgwidth=img.getWidth();
