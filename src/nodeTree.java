@@ -1,15 +1,19 @@
+import java.util.Random;
 
 public class nodeTree {
 	private nodeTree parent;
-	private State state;
+    State state;
 	private int partialCost;
 	private char action;
-	public nodeTree(nodeTree parent, State state, int partialCost,char action){
+	private float value;
+	private Random rndGenerator = new Random();
+	
+	public nodeTree(nodeTree parent, State state, char action){
 		this.parent=parent;
 		this.state=state;
-		this.partialCost=partialCost;
 		this.action=action;
-
+		this.partialCost=rndGenerator.nextInt(900)+100;
+		this.value = this.getTotalCost();
 	}
 	public nodeTree(State state){
 		this.parent=null;
@@ -17,4 +21,42 @@ public class nodeTree {
 		this.partialCost=0;
 
 	}
+	public int getTotalCost(){
+		 if(!(this.parent==null)){
+			   return this.partialCost+this.parent.getTotalCost();
+			  }else{
+			   return this.partialCost;
+			  }
+	}
+	public nodeTree getParent() {
+		return parent;
+	}
+	public void setParent(nodeTree parent) {
+		this.parent = parent;
+	}
+	public State getState() {
+		return state;
+	}
+	public void setState(State state) {
+		this.state = state;
+	}
+	public int getPartialCost() {
+		return partialCost;
+	}
+	public void setPartialCost(int partialCost) {
+		this.partialCost = partialCost;
+	}
+	public char getAction() {
+		return action;
+	}
+	public void setAction(char action) {
+		this.action = action;
+	}
+	public float getValue() {
+		return value;
+	}
+	public void setValue(float value) {
+		this.value = value;
+	}
+	
 }

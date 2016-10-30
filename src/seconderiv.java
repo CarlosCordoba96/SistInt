@@ -19,11 +19,11 @@ import java.awt.*;
  */
 public class seconderiv {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, CloneNotSupportedException {
 		init();
 
 	}
-	public static void init() throws IOException{
+	public static void init() throws IOException, CloneNotSupportedException{
 		Puzzle p = new Puzzle();
 		BufferedImage image = chargeimage("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/AlhambraInicialPuzzle4x4.png"); //reading the image file
 		BufferedImage image2 = chargeimage("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/IntermedioAlhambra41.png");
@@ -52,37 +52,44 @@ public class seconderiv {
 		
 		State initialstate= new State(rows,cols,cero,pos);
 		nodeTree firstnode = new nodeTree(initialstate);
-		//FRONTERA
 		
+		//FRONTERA
+		//////////////////////////////
 		Stack <nodeTree> frontier = new Stack<nodeTree>();
 		frontier.push(firstnode);
-		
+		//////////////////////////////
 		
 		ngen++;
 		time=System.currentTimeMillis();
 			while(true){
 				time_start = System.currentTimeMillis();
 				
-				
+				///////////////////////////////
 				nodeTree node=frontier.pop();
-				Stack<State> states=node.state.sucessors();
+				//////////////////////////////
+				
+				Stack<State> states=node.state.succesor();
 					while(!states.isEmpty()){
-						nodeTree tnode = new nodeTree(node,states.pop(),'l');
+						//////////////////////////////
+						State st=states.pop();
+						nodeTree tnode = new nodeTree(node,st,st.action);
 						frontier.push(tnode);
+						//////////////////////////////	
 						ngen++;
 					}
 				nite++;
 				
 				time_end = System.currentTimeMillis();
 				 System.out.println("Iteration nº: " +nite + ". Nodes that have been created: " + ngen + ""
-				 		+ " , time consumed in the iteration " + time_start + ", time since we started"
-				 				+ "creating the nodes " + time_end);
+				 		+ " , time consumed in the iteration " + (time_end-time_start) + ", time since we started"
+				 				+ "creating the nodes " + (time_end-time)/1000);
 			}
 	}
 	/*
 	 * 
 	 * Method to read the images from files
 	 */
+	
 	public static BufferedImage chargeimage(String trace) throws IOException{
 		File file = new File(trace); 
 		FileInputStream img = new FileInputStream(file);

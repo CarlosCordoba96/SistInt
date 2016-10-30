@@ -14,6 +14,9 @@ import java.awt.*;
 /**
  * @author Alvaro Angel-Moreno Pinilla, Carlos C�rdoba Ruiz & Roberto Plaza Romero
  */
+/*
+ * 
+ */
 public class TestSplit {
 
 	public static void main(String[] args) throws IOException {
