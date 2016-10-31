@@ -22,7 +22,7 @@ public class State implements Cloneable{
 	 *isValid isGoal succesor		
 	 */
 
-	public boolean isValid(char c){
+	public static boolean isValid(char c){
 		boolean sol=false;
 		switch(c){
 		case 'u':
@@ -49,8 +49,26 @@ public class State implements Cloneable{
 		return sol;
 	}
 	
+	public static Stack<Character> posiblemov(){
+		Stack<Character> movements = new Stack<Character>();
+		if(isValid('u')){
+			movements.push('u');
+		}
+		if(isValid('d')){
+			movements.push('d');
+		}
+		if(isValid('l')){
+			movements.push('l');
+		}
+		if(isValid('r')){
+			movements.push('r');
+		}
+		return movements;
+	}
+	
 	public Stack<State> succesor() throws CloneNotSupportedException {
 		Stack<State> s = new Stack<State>();
+		
 		if(isValid('u')){
 			s.push(move('u',(State)this.clone()));
 		}
@@ -118,6 +136,6 @@ public class State implements Cloneable{
 		}
 		return posible;
 	}
-
+	
 	
 }
