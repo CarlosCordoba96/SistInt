@@ -68,19 +68,11 @@ public class State implements Cloneable{
 	
 	public Stack<State> succesor() throws CloneNotSupportedException {
 		Stack<State> s = new Stack<State>();
+		Stack<Character> posmov=posiblemov();
+		while(!posmov.isEmpty()){
+			//pop del posible mov hacer movimiento y creamos un state  nuevo, push en s
+		}
 		
-		if(isValid('u')){
-			s.push(move('u',(State)this.clone()));
-		}
-		if(isValid('d')){
-			s.push(move('d',(State)this.clone()));
-		}
-		if(isValid('l')){
-			s.push(move('l',(State)this.clone()));
-		}
-		if(isValid('r')){
-			s.push(move('r',(State)this.clone()));
-		}
 		return s;
 	}
 	private State move(char c, State s){
