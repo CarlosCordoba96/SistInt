@@ -36,12 +36,13 @@ public class seconderiv {
 		BufferedImage imgs[][] = new BufferedImage[rows][cols]; //Image array to hold image chunks
 		BufferedImage imgs2[][] = new BufferedImage[rows][cols];	        
 		int pos[][] = new int [rows][cols]; 
+		int orgpos[][] = new int [rows][cols]; 
 		int cero[]=new int[2];
 		spliting(rows, cols, splitWidth, splitHeight, image, imgs);
 		spliting(rows, cols, splitWidth, splitHeight, image2, imgs2);
 		findpos(imgs, imgs2, pos);
-		whereiszero(pos, cero);
-		
+		findpos(imgs, imgs, orgpos);
+		whereiszero(pos, cero);//GOAL STATE
 		
 		//acortar usando orientado a objetos
 		 int ngen=0;
@@ -78,7 +79,7 @@ public class seconderiv {
 					while(!states.isEmpty()){
 						//////////////////////////////
 						State st=states.pop();
-						System.out.println("ACTION : "+st.action);
+						//System.out.println("ACTION : "+st.action);
 						printarray(st.getPuzzle());
 						nodeTree tnode = new nodeTree(node,st,st.action);
 						frontier.push(tnode);
