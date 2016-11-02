@@ -8,6 +8,7 @@ import java.awt.image.PixelGrabber;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Stack;
 import java.awt.*;
 
@@ -24,7 +25,6 @@ public class seconderiv {
 
 	}
 	public static void init() throws IOException, CloneNotSupportedException{
-		Puzzle p = new Puzzle();
 		BufferedImage image = chargeimage("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/AlhambraInicialPuzzle4x4.png"); //reading the image file
 		BufferedImage image2 = chargeimage("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/IntermedioAlhambra41.png");
 		int rows =4; //You should decide the values for rows and cols variables
@@ -40,6 +40,7 @@ public class seconderiv {
 		spliting(rows, cols, splitWidth, splitHeight, image, imgs);
 		spliting(rows, cols, splitWidth, splitHeight, image2, imgs2);
 		findpos(imgs, imgs2, pos);
+		whereiszero(pos, cero);
 		
 		
 		//acortar usando orientado a objetos
@@ -47,17 +48,21 @@ public class seconderiv {
 		 int nite=0;
 		 long  time,time_start, time_end;
 		 
+		 printarray(pos);
 		
 		 
-		
+	
 		State initialstate= new State(rows,cols,cero,pos);
 		nodeTree firstnode = new nodeTree(initialstate);
 		
+		
 		//FRONTERA
-		//////////////////////////////
+		/*//////////////////////////////
 		Stack <nodeTree> frontier = new Stack<nodeTree>();
+		
+		//////////////////////////////*/
+		LinkedList <nodeTree> frontier=new LinkedList<nodeTree>();
 		frontier.push(firstnode);
-		//////////////////////////////
 		
 		ngen++;
 		time=System.currentTimeMillis();
@@ -69,9 +74,12 @@ public class seconderiv {
 				//////////////////////////////
 				
 				Stack<State> states=node.state.succesor();
+				
 					while(!states.isEmpty()){
 						//////////////////////////////
 						State st=states.pop();
+						System.out.println("ACTION : "+st.action);
+						printarray(st.getPuzzle());
 						nodeTree tnode = new nodeTree(node,st,st.action);
 						frontier.push(tnode);
 						//////////////////////////////	
@@ -83,7 +91,10 @@ public class seconderiv {
 				 System.out.println("Iteration nº: " +nite + ". Nodes that have been created: " + ngen + ""
 				 		+ " , time consumed in the iteration " + (time_end-time_start) + ", time since we started"
 				 				+ "creating the nodes " + (time_end-time)/1000);
+				
+				 
 			}
+			
 	}
 	/*
 	 * 
@@ -114,7 +125,16 @@ public class seconderiv {
 	/*
 	 * Create from the original image a black image in the first position of the array created
 	 */
-	
+	public static void printarray(int[][] array){
+
+		for(int i = 0; i<array.length;i++){
+			for(int j = 0; j<array[0].length;j++){
+
+				System.out.print(array[i][j]+" ");
+			}
+			System.out.print("\n");
+		}
+	}
 	public static boolean compareminimg (BufferedImage img1, BufferedImage img2){//COMPARE 2 IMAGES
 
 		if (img1.getWidth() != img2.getWidth() || img1.getHeight()!= img2.getHeight()) {
@@ -148,6 +168,16 @@ public class seconderiv {
 				}	        	
 			}
 		if (result) System.out.println("Both images are equal.");
+	}
+	public static void whereiszero(int [][] array, int[] cero){
+		for(int i=0;i<array.length;i++){
+			for(int j=0;j<array[i].length;j++){
+				if(array[i][j]==0){
+					cero[0]=i;
+					cero[1]=j;
+				}
+			}
+		}
 	}
 	/*
 	 * We calculate the position of the image comparing the clear one
