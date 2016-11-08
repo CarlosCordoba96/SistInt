@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.Stack;
 import java.awt.*;
 
@@ -49,9 +50,7 @@ public class seconderiv {
 		 int ngen=0;
 		 int nite=0;
 		 long  time,time_start, time_end;
-		 
-		 printarray(pos);
-		
+		 		
 		 
 	
 		State initialstate= new State(rows,cols,cero,pos);
@@ -80,9 +79,12 @@ public class seconderiv {
 					while(!states.isEmpty()){
 						//////////////////////////////
 						State st=states.pop();
-						//System.out.println("ACTION : "+st.action);
+						System.out.println("ACTION : "+st.action);
 						printarray(st.getPuzzle());
+						
 						nodeTree tnode = new nodeTree(node,st,st.action);
+						System.out.println("The value of the node is: "+node.getValue());
+						System.out.println("########################################################");
 						frontier.push(tnode);
 						//////////////////////////////	
 						ngen++;

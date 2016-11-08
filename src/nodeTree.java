@@ -3,30 +3,34 @@ import java.util.Random;
 public class nodeTree {
 	private nodeTree parent;
     State state;
-	private float partialCost;
+	private int partialCost;
 	private char action;
-	private float value;
+	private int value;
 	private Random rndGenerator = new Random();
+	private int depth;
 	
 	public nodeTree(nodeTree parent, State state, char action){
 		this.parent=parent;
 		this.state=state;
 		this.action=action;
-		this.partialCost=rndGenerator.nextInt(900)+100;
-		this.value = this.getTotalCost();
+		this.partialCost= parent.getPartialCost()+1;
+		this.value =rndGenerator.nextInt(900)+100;
+		this.depth=parent.getDepth()+1;
 	}
 	public nodeTree(State state){
 		this.parent=null;
 		this.state=state;
 		this.partialCost=0;
-
+		this.action=' ';
+		this.depth=0;
+		this.value =0;
 	}
-	public int getTotalCost(){
-		 if((this.parent!=null)){
-			   return (int) (this.partialCost+this.parent.getTotalCost());
-			  }else{
-			   return (int) value;
-			  }
+
+	public int getDepth() {
+		return depth;
+	}
+	public void setDepth(int depth) {
+		this.depth = depth;
 	}
 	public nodeTree getParent() {
 		return parent;
@@ -55,7 +59,7 @@ public class nodeTree {
 	public float getValue() {
 		return value;
 	}
-	public void setValue(float value) {
+	public void setValue(int value) {
 		this.value = value;
 	}
 	

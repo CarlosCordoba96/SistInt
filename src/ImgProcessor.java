@@ -1,6 +1,14 @@
 import javax.imageio.ImageIO;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.image.PixelGrabber;
+
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Stack;
 import java.awt.*;
 
 public class ImgProcessor {
@@ -8,21 +16,35 @@ public class ImgProcessor {
 	private int cols;
 	private BufferedImage img;
 	private BufferedImage img2;
-	private BufferedImage [][] spimg;
-	private BufferedImage [][] spimg2;
+	private BufferedImage spimg [][];
+	private BufferedImage spimg2 [][];
 	private int [][] pos;
-	private int [] zero;
+	private int [] zero = new int [2];
 	
 	public ImgProcessor (int rows, int cols, String trace1, String trace2) throws IOException {
 		this.rows = rows;
 		this.cols = cols;
 		this.img = chargeimage(trace1);
 		this.img2 = chargeimage(trace2);
+		spimg = createimgarray (rows, cols);
+		spimg2 = createimgarray (rows, cols);
+		pos = new int [rows][cols];
+		
 		spliting (rows, cols, img, spimg);
 		spliting (rows, cols, img2, spimg2);
 		findpos(spimg, spimg2, pos);
 		whereiszero (pos, zero);
-		
+		printarray(pos);
+	}
+	
+	public BufferedImage [][] createimgarray (int rows, int cols) {		
+		BufferedImage image [][] = new BufferedImage[rows][cols];
+		return image;
+	}
+	
+	public int [][] createarray (int rows, int cols) {
+		int [][] array = new int [rows][cols];
+		return array;
 	}
 	
 	/* 
@@ -38,7 +60,7 @@ public class ImgProcessor {
 	/*
 	 * Split the image and store each sub-image in each position of the array
 	 */
-	public void spliting (int rows, int cols, BufferedImage image, BufferedImage[][] imgs) throws IOException {
+	public  void spliting (int rows, int cols, BufferedImage image, BufferedImage[][] imgs) throws IOException {
 		int splitWidth = image.getWidth()/rows;
 		int splitHeight = image.getHeight()/cols;	
 		for (int x = 0; x < rows; x++) {
