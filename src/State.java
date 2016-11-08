@@ -6,6 +6,7 @@ public class State implements Cloneable{
 	private  int [] cero=new int[2];
 	private final int [][] puzzle;
     char action;
+    int c;
 	public State(int n_rows, int n_cols, int [] cero, int [][] puzzle){
 		this.n_rows=n_rows;
 		this.n_cols=n_cols;
