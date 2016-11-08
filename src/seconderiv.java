@@ -42,7 +42,8 @@ public class seconderiv {
 		spliting(rows, cols, splitWidth, splitHeight, image2, imgs2);
 		findpos(imgs, imgs2, pos);
 		findpos(imgs, imgs, orgpos);
-		whereiszero(pos, cero);//GOAL STATE
+		whereiszero(pos, cero);
+		printarray(orgpos);
 		
 		//acortar usando orientado a objetos
 		 int ngen=0;
