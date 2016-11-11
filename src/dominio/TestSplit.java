@@ -1,8 +1,12 @@
+package dominio;
 import javax.imageio.ImageIO;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import presentacion.Puzzle;
+
 import java.awt.image.PixelGrabber;
 
 import java.awt.image.BufferedImage;

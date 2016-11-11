@@ -1,17 +1,24 @@
+package dominio;
+
 import javax.imageio.ImageIO;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
 import java.awt.image.PixelGrabber;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Stack;
 import java.awt.*;
+import presentacion.Puzzle;
 
 /**
  * @author Alvaro Angel-Moreno Pinilla, Carlos C�rdoba Ruiz & Roberto Plaza Romero
@@ -26,8 +33,8 @@ public class seconderiv {
 
 	}
 	public static void init() throws IOException, CloneNotSupportedException{
-		BufferedImage image = chargeimage("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/AlhambraInicialPuzzle4x4.png"); //reading the image file
-		BufferedImage image2 = chargeimage("C:/Users/Carlos/workspace/Game/pics/Alhambra4x4/IntermedioAlhambra41.png");
+		BufferedImage image = chargeimage("pics/AlhambraInicialPuzzle4x4.png"); //reading the image file
+		BufferedImage image2 = chargeimage("pics/IntermedioAlhambra41.png");
 		int rows =4; //You should decide the values for rows and cols variables
 		int cols = 4;	        
 		int ImgWidth = image.getWidth();
@@ -45,66 +52,68 @@ public class seconderiv {
 		findpos(imgs, imgs, orgpos);
 		whereiszero(pos, cero);
 		printarray(orgpos);
-		
+
 		//acortar usando orientado a objetos
-		 int ngen=0;
-		 int nite=0;
-		 long  time,time_start, time_end;
-		 		
-		 
-	
-		State initialstate= new State(rows,cols,cero,pos);
+		int ngen=0;
+		int nite=0;
+		long  time,time_start, time_end;
+
+		int value=0;
+;
+
+		State initialstate= new State(rows,cols,cero[0],cero[1],pos);
 		nodeTree firstnode = new nodeTree(initialstate);
-		
-		
+
+
 		//FRONTERA
 		/*//////////////////////////////
 		Stack <nodeTree> frontier = new Stack<nodeTree>();
-		
+
 		//////////////////////////////*/
-		LinkedList <nodeTree> frontier=new LinkedList<nodeTree>();
-		frontier.push(firstnode);
-		
+		PriorityQueue<nodeTree> frontier = createFrontier();
+		insertFrontier(firstnode,frontier);
+
 		ngen++;
 		time=System.currentTimeMillis();
-			while(true){
-				time_start = System.currentTimeMillis();
-				
-				///////////////////////////////
-				nodeTree node=frontier.pop();
+		while(true){
+			time_start = System.currentTimeMillis();
+
+			///////////////////////////////
+			nodeTree node=removeFirstFrontier(frontier);
+			//////////////////////////////
+
+			Stack<State> states=node.state.succesor();
+
+			while(!states.isEmpty()){
+				Random rndGenerator=new Random();
 				//////////////////////////////
-				
-				Stack<State> states=node.state.succesor();
-				
-					while(!states.isEmpty()){
-						//////////////////////////////
-						State st=states.pop();
-						System.out.println("ACTION : "+st.action);
-						printarray(st.getPuzzle());
-						
-						nodeTree tnode = new nodeTree(node,st,st.action);
-						System.out.println("The value of the node is: "+node.getValue());
-						System.out.println("########################################################");
-						frontier.push(tnode);
-						//////////////////////////////	
-						ngen++;
-					}
-				nite++;
-				
-				time_end = System.currentTimeMillis();
-				 System.out.println("Iteration nº: " +nite + ". Nodes that have been created: " + ngen + ""
-				 		+ " , time consumed in the iteration " + (time_end-time_start) + ", time since we started"
-				 				+ "creating the nodes " + (time_end-time)/1000);
-				
-				 
+				State st=states.pop();
+				//System.out.println("ACTION : "+st.action);
+				//printarray(st.getPuzzle());
+				value=rndGenerator.nextInt(900)+100;
+				nodeTree tnode = new nodeTree(node,st,st.action,value);
+				//System.out.println("The value of the node is: "+tnode.getValue());
+				//System.out.println("########################################################");
+				insertFrontier(tnode, frontier);
+				//////////////////////////////	
+				ngen++;
 			}
-			
+			nite++;
+
+			time_end = System.currentTimeMillis();
+			System.out.println("Iteration nº: " +nite + ". Nodes that have been created: " + ngen + ""
+					+ " , time consumed in the iteration " + (time_end-time_start) + ", time since we started"
+					+ "creating the nodes " + (time_end-time)/1000);
+
+
+		}
+
 	}
 	/*
 	 * 
 	 * Method to read the images from files
 	 */
-	
+
 	public static BufferedImage chargeimage(String trace) throws IOException{
 		File file = new File(trace); 
 		FileInputStream img = new FileInputStream(file);
@@ -131,6 +140,7 @@ public class seconderiv {
 	 */
 	public static void printarray(int[][] array){
 
+
 		for(int i = 0; i<array.length;i++){
 			for(int j = 0; j<array[0].length;j++){
 
@@ -139,6 +149,7 @@ public class seconderiv {
 			System.out.print("\n");
 		}
 	}
+	//CAMBIAR ESTE METODOOOOOOOOOOOOOOOOOOO
 	public static boolean compareminimg (BufferedImage img1, BufferedImage img2){//COMPARE 2 IMAGES
 
 		if (img1.getWidth() != img2.getWidth() || img1.getHeight()!= img2.getHeight()) {
@@ -233,4 +244,31 @@ public class seconderiv {
 	/*
 	 * Move to the left the black image
 	 */
+	public static PriorityQueue<nodeTree> createFrontier(){
+		return new PriorityQueue<nodeTree>(new Comparator<nodeTree>() {
+			public int compare(nodeTree e1, nodeTree e2) {
+				if(e1.getValue() > e2.getValue())
+					return 1;
+				
+				else if(e1.getValue() < e2.getValue())
+					return -1;
+				
+				else
+					return 0;
+			}
+
+		});
+	}
+
+	public static void insertFrontier(nodeTree t, Queue<nodeTree> frontier){
+		frontier.add(t);
+		}
+
+	public static nodeTree removeFirstFrontier(Queue<nodeTree> frontier){
+		return frontier.poll();
+		}
+
+	public static boolean frontierIsEmpty(Queue<nodeTree> frontier){
+		return frontier.isEmpty();
+		}
 }

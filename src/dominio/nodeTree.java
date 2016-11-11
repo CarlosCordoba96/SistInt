@@ -1,4 +1,4 @@
-import java.util.Random;
+package dominio;
 
 public class nodeTree {
 	private nodeTree parent;
@@ -6,15 +6,14 @@ public class nodeTree {
 	private int partialCost;
 	private char action;
 	private int value;
-	private Random rndGenerator = new Random();
 	private int depth;
 	
-	public nodeTree(nodeTree parent, State state, char action){
+	public nodeTree(nodeTree parent, State state, char action,int value){
 		this.parent=parent;
 		this.state=state;
 		this.action=action;
 		this.partialCost= parent.getPartialCost()+1;
-		this.value =rndGenerator.nextInt(900)+100;
+		this.value =value;
 		this.depth=parent.getDepth()+1;
 	}
 	public nodeTree(State state){

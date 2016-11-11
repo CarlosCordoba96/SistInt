@@ -1,3 +1,4 @@
+package presentacion;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;

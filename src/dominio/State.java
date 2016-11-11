@@ -1,24 +1,29 @@
+package dominio;
+
 import java.util.Stack;
 
 public class State {
 	private static int n_rows;
 	private static int n_cols;
-	private  int [] cero=new int[2];
+	private int icero;
+	private int jcero;
 	private final int [][] puzzle;
     char action;
-	public State(int n_rows, int n_cols, int [] cero, int [][] puzzle){
-		this.n_rows=n_rows;
-		this.n_cols=n_cols;
-		whereiszero(puzzle,this.cero);
+	public State(int rows, int cols, int xcero, int ycero, int [][] puzzle){
+		this.n_rows=rows;
+		this.n_cols=cols;
+		this.icero = xcero;
+		this.jcero = ycero;
 		this.puzzle=puzzle;
 		
 	}
-	public State(int n_rows, int n_cols, int [] cero,int [][] puzzle,char action) {
-		this.n_rows=n_rows;
-		this.n_cols=n_cols;
+	public State(int rows, int cols, int xcero, int ycero, int [][] puzzle,char action) {
+		this.n_rows=rows;
+		this.n_cols=cols;
 		this.puzzle=puzzle;
 		this.action=action;
-		whereiszero(puzzle,this.cero);
+		this.icero = xcero;
+		this.jcero = ycero;
 	}
 	/*
 	 * El puzzle, el array de numeros o de imagenes?
@@ -69,10 +74,26 @@ public class State {
 		}
 		return movements;
 	}
-	public void generatesuccesor(Stack <State> succesors,char mov){
-		int [][] puzzlenew=copyarr(puzzle);
-		move(mov,puzzlenew);
-		State statenew=new State(n_rows,n_cols,cero,puzzlenew,mov);
+	public void generatesuccesor(Stack <State> succesors,char mov, int[][] p){
+		move(mov,p);
+		State statenew;
+		switch(mov){
+			case 'u':
+				statenew=new State(n_rows,n_cols,this.icero++, this.jcero,p,mov);
+				break;
+			case 'd':
+				statenew=new State(n_rows,n_cols,this.icero--, this.jcero,p,mov);
+			break;
+			case 'l':
+				statenew=new State(n_rows,n_cols,this.icero, this.jcero++,p,mov);
+			break;
+			case 'r':
+				statenew=new State(n_rows,n_cols,this.icero, this.jcero--,p,mov);
+			break;
+			default:
+				statenew=new State(n_rows,n_cols,this.icero, this.jcero,p,mov);
+			break;
+		}
 		succesors.push(statenew);
 	}
 	public Stack<State> succesor() throws CloneNotSupportedException {
@@ -80,7 +101,7 @@ public class State {
 		Stack<Character> posmov=posiblemov();
 		while(!posmov.isEmpty()){
 			//pop del posible mov hacer movimiento y creamos un state  nuevo, push en s
-			generatesuccesor(s,posmov.pop());
+			generatesuccesor(s,posmov.pop(),copyarr(this.puzzle));
 		}
 		
 		return s;
@@ -92,52 +113,52 @@ public class State {
 		
 		switch(c){
 			case 'u':
-				arr[cero[0]][cero[1]] = arr[cero[0]-1][cero[1]];
-				arr[cero[0]-1][cero[1]] = 0;
-				
+				arr[icero][jcero] = arr[icero-1][jcero];
+				arr[icero-1][jcero] = 0;
+				this.icero--;
 				break;
 			case 'd':
-				arr[cero[0]][cero[1]] = arr[cero[0]+1][cero[1]];
-				arr[cero[0]+1][cero[1]] = 0;
-				
+				arr[icero][jcero] = arr[icero+1][jcero];
+				arr[icero+1][jcero] = 0;
+				this.icero++;
 				break;
 			case 'l':
-				arr[cero[0]][cero[1]] = arr[cero[0]][cero[1]-1];
-				arr[cero[0]][cero[1]-1] = 0;
-				
+				arr[icero][jcero] = arr[icero][jcero-1];
+				arr[icero][jcero-1] = 0;
+				this.jcero--;
 				break;
 			case 'r':
-				arr[cero[0]][cero[1]] = arr[cero[0]][cero[1]+1];
-				arr[cero[0]][cero[1]+1] = 0;
-				
+				arr[icero][jcero] = arr[icero][jcero+1];
+				arr[icero][jcero+1] = 0;
+				this.jcero++;
 				break;
 		}
 		
 	}
 	public  boolean ispossUp(){
 		boolean posible=false;
-		if(cero[0]!=0){
+		if(icero!=0){
 			posible=true;
 		}
 		return posible;
 	}
 	public  boolean ispossDown(){
 		boolean posible=false;
-		if(cero[0]!=n_rows-1){
+		if(icero!=n_rows-1){
 			posible=true;
 		}
 		return posible;
 	}
 	public  boolean ispossLeft(){
 		boolean posible=false;
-		if(cero[1]!=0){
+		if(jcero!=0){
 			posible=true;
 		}
 		return posible;
 	}
 	public  boolean ispossRight(){
 		boolean posible=false;
-		if(cero[1]!=n_cols-1){
+		if(jcero !=n_cols-1){
 			posible=true;
 		}
 		return posible;
@@ -160,15 +181,5 @@ public class State {
 			}
 		}
 		return a;
-	}
-	public static void whereiszero(int [][] array, int[] cero){
-		for(int i=0;i<array.length;i++){
-			for(int j=0;j<array[i].length;j++){
-				if(array[i][j]==0){
-					cero[0]=i;
-					cero[1]=j;
-				}
-			}
-		}
 	}
 }
