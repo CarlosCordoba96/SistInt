@@ -267,4 +267,20 @@ public class ImgProcessor {
 			poscero[0] = ibuff+1;
 		}
 	}
+	public int[][] getPos() {
+		return pos;
+	}
+
+	public void setPos(int[][] pos) {
+		this.pos = pos;
+	}
+
+	public int[] getZero() {
+		return zero;
+	}
+
+	public void setZero(int[] zero) {
+		this.zero = zero;
+	}
+
 }

@@ -1,34 +1,13 @@
 package dominio;
 
-import javax.imageio.ImageIO;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-import java.awt.image.PixelGrabber;
-
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Random;
 import java.util.Stack;
-import java.awt.*;
-import presentacion.Puzzle;
 
-/**
- * @author Alvaro Angel-Moreno Pinilla, Carlos Cï¿½rdoba Ruiz & Roberto Plaza Romero
- */
-/*
- * 
- */
-public class TestLinkedlist{
-
+public class secderiv {
 	public static void main(String[] args) throws IOException{
 		init();
 
@@ -62,13 +41,12 @@ public class TestLinkedlist{
 				State st=states.pop();
 				value=rndGenerator.nextInt(900)+100;
 				nodeTree tnode = new nodeTree(node,st,st.action,value);
-				insertFrontier(tnode, frontier);
 				ngen++;
 			}
 			nite++;
 
 			time_end = System.currentTimeMillis();
-			System.out.println(" Llist Iteration nÂº: " +nite + ". Nodes that have been created: " + ngen + ""
+			System.out.println(" Llist Iteration nº: " +nite + ". Nodes that have been created: " + ngen + ""
 					+ " , time consumed in the iteration " + (time_end-time_start) + ", time since we started"
 					+ "creating the nodes " + (time_end-time)/1000);
 
@@ -105,5 +83,6 @@ public class TestLinkedlist{
 	public static boolean frontierIsEmpty(LinkedList <nodeTree> frontier){
 		return frontier.isEmpty();
 	}
+
 
 }

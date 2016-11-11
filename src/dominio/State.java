@@ -96,7 +96,7 @@ public class State {
 		}
 		succesors.push(statenew);
 	}
-	public Stack<State> succesor() throws CloneNotSupportedException {
+	public Stack<State> succesor(){
 		Stack<State> s = new Stack<State>();
 		Stack<Character> posmov=posiblemov();
 		while(!posmov.isEmpty()){
