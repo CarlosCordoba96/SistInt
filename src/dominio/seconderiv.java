@@ -35,7 +35,7 @@ public class seconderiv {
 	public static void init() throws IOException, CloneNotSupportedException{
 		BufferedImage image = chargeimage("pics/AlhambraInicialPuzzle4x4.png"); //reading the image file
 		BufferedImage image2 = chargeimage("pics/IntermedioAlhambra41.png");
-		int rows =4; //You should decide the values for rows and cols variables
+		int rows =4; //You should decide the values for rows and cols variabless
 		int cols = 4;	        
 		int ImgWidth = image.getWidth();
 		int ImgHeight = image.getHeight();
