@@ -1,16 +1,17 @@
 package dominio;
 
-import java.io.IOException;
-import java.util.PriorityQueue;
+
 
 public class Problem {
 
-	public static void main(String[] args) {
-		init();
-
+	private StateSpace goalState;
+	private StateSpace initialState;
+	
+	public Problem(StateSpace goalstate, StateSpace initialState){
+		this.goalState=goalstate;
+		this.initialState=initialState;
 	}
-	public static void init() {
-		System.out.println("");
+	
 
-	}
+
 }

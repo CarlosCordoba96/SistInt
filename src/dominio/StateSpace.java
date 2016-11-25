@@ -74,33 +74,33 @@ public class StateSpace {
 		}
 		return movements;
 	}
-	public void generatesuccesor(Stack <State> succesors,char mov, int[][] p){
+	public void generatesuccesor(Stack <StateSpace> succesors,char mov, int[][] p){
 		move(mov,p);
-		State statenew;
+		StateSpace StateSpacenew;
 		switch(mov){
 			case 'u':
-				statenew=new State(n_rows,n_cols,this.icero++, this.jcero,p,mov);
+				StateSpacenew=new StateSpace(n_rows,n_cols,this.icero++, this.jcero,p,mov);
 				break;
 			case 'd':
-				statenew=new State(n_rows,n_cols,this.icero--, this.jcero,p,mov);
+				StateSpacenew=new StateSpace(n_rows,n_cols,this.icero--, this.jcero,p,mov);
 			break;
 			case 'l':
-				statenew=new State(n_rows,n_cols,this.icero, this.jcero++,p,mov);
+				StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero++,p,mov);
 			break;
 			case 'r':
-				statenew=new State(n_rows,n_cols,this.icero, this.jcero--,p,mov);
+				StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero--,p,mov);
 			break;
 			default:
-				statenew=new State(n_rows,n_cols,this.icero, this.jcero,p,mov);
+				StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero,p,mov);
 			break;
 		}
-		succesors.push(statenew);
+		succesors.push(StateSpacenew);
 	}
-	public Stack<State> succesor(){
-		Stack<State> s = new Stack<State>();
+	public Stack<StateSpace> succesor(){
+		Stack<StateSpace> s = new Stack<StateSpace>();
 		Stack<Character> posmov=posiblemov();
 		while(!posmov.isEmpty()){
-			//pop del posible mov hacer movimiento y creamos un state  nuevo, push en s
+			//pop del posible mov hacer movimiento y creamos un StateSpace  nuevo, push en s
 			generatesuccesor(s,posmov.pop(),copyarr(this.puzzle));
 		}
 		

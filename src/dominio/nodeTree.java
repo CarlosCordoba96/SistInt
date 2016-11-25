@@ -4,15 +4,15 @@ import java.util.Queue;
 
 public class nodeTree {
 	private nodeTree parent;
-    State state;
+    StateSpace StateSpace;
 	private int partialCost;
 	private char action;
 	private float value;
 	private int depth;
 	
-	public nodeTree(nodeTree parent, State state, char action,String strat,int Mdepth){
+	public nodeTree(nodeTree parent, StateSpace StateSpace, char action,String strat,int Mdepth){
 		this.parent=parent;
-		this.state=state;
+		this.StateSpace=StateSpace;
 		this.action=action;
 		this.partialCost= parent.getPartialCost()+1;
 		this.depth=parent.getDepth()+1;
@@ -25,9 +25,9 @@ public class nodeTree {
 			this.value=this.partialCost;
 		}
 	}
-	public nodeTree(State state){
+	public nodeTree(StateSpace StateSpace){
 		this.parent=null;
-		this.state=state;
+		this.StateSpace=StateSpace;
 		this.partialCost=0;
 		this.action=' ';	
 		this.depth=0;
@@ -46,11 +46,11 @@ public class nodeTree {
 	public void setParent(nodeTree parent) {
 		this.parent = parent;
 	}
-	public State getState() {
-		return state;
+	public StateSpace getStateSpace() {
+		return StateSpace;
 	}
-	public void setState(State state) {
-		this.state = state;
+	public void setStateSpace(StateSpace StateSpace) {
+		this.StateSpace = StateSpace;
 	}
 	public int getPartialCost() {
 		return (int) partialCost;
@@ -72,12 +72,10 @@ public class nodeTree {
 	}
 	public void getPath(Queue<Character> q){
 		
-		if(parent!=null){
-			parent.getPath(q);
-			q.add(action);
-		}else{
-			q.add(action);
-		}
+		 while(parent!=null){
+			   parent.getParent();
+			   q.add(action);
+			  }
 		
 	}
 	
