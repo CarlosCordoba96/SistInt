@@ -1,32 +1,18 @@
-package dominio;
+/*package dominio;
 
-import javax.imageio.ImageIO;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-
-import java.awt.image.PixelGrabber;
-
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Random;
 import java.util.Stack;
-import java.awt.*;
-import presentacion.Puzzle;
 
-/**
+*//**
  * @author Alvaro Angel-Moreno Pinilla, Carlos C�rdoba Ruiz & Roberto Plaza Romero
- */
-/*
+ *//*
+
  * 
- */
+ 
 public class TestLinkedlist{
 
 	public static void main(String[] args) throws IOException{
@@ -106,4 +92,4 @@ public class TestLinkedlist{
 		return frontier.isEmpty();
 	}
 
-}
+}*/

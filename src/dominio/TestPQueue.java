@@ -1,4 +1,4 @@
-package dominio;
+/*package dominio;
 
 import javax.imageio.ImageIO;
 
@@ -17,12 +17,12 @@ import java.util.Random;
 import java.util.Stack;
 import java.awt.*;
 
-/**
+*//**
  * @author Alvaro Angel-Moreno Pinilla, Carlos C�rdoba Ruiz & Roberto Plaza Romero
- */
-/*
+ *//*
+
  * 
- */
+ 
 public class TestPQueue{
 
 	public static void main(String[] args) throws IOException{
@@ -40,7 +40,7 @@ public class TestPQueue{
 		int ngen=0;
 		int nite=0;
 		long  time,time_start, time_end;
-		int value=0;
+		float value=0;
 
 		State initialstate= new State(rows,cols,cero[0],cero[1],pos);
 		nodeTree firstnode = new nodeTree(initialstate);
@@ -56,13 +56,21 @@ public class TestPQueue{
 			while(!states.isEmpty()){
 				Random rndGenerator=new Random();		
 				State st=states.pop();
-				value=rndGenerator.nextInt(900)+100;
+				value=rndGenerator.nextFloat()*1000+1;
+				
 				nodeTree tnode = new nodeTree(node,st,st.action,value);
+				if()
 				insertFrontier(tnode, frontier);
 				ngen++;
 			}
 			nite++;
-
+			if(nite==20){
+				for(int i = 0; i < frontier.size(); i++){
+					           System.out.println(frontier.poll().getValue());
+					          
+					        }
+				System.out.println("FINISH);");
+			}
 			time_end = System.currentTimeMillis();
 			System.out.println(" PQueue Iteration nº: " +nite + ". Nodes that have been created: " + ngen + ""
 					+ " , time consumed in the iteration " + (time_end-time_start) + ", time since we started"
@@ -99,4 +107,4 @@ public class TestPQueue{
 	public static boolean frontierIsEmpty(Queue<nodeTree> frontier){
 		return frontier.isEmpty();
 		}
-}
+}*/

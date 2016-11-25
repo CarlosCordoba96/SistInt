@@ -1,4 +1,4 @@
-package dominio;
+/*package dominio;
 
 import javax.imageio.ImageIO;
 
@@ -20,12 +20,12 @@ import java.util.Stack;
 import java.awt.*;
 import presentacion.Puzzle;
 
-/**
+*//**
  * @author Alvaro Angel-Moreno Pinilla, Carlos C�rdoba Ruiz & Roberto Plaza Romero
- */
-/*
+ *//*
+
  * 
- */
+ 
 public class seconderiv {
 
 	public static void main(String[] args) throws IOException, CloneNotSupportedException {
@@ -66,10 +66,10 @@ public class seconderiv {
 
 
 		//FRONTERA
-		/*//////////////////////////////
+		//////////////////////////////
 		Stack <nodeTree> frontier = new Stack<nodeTree>();
 
-		//////////////////////////////*/
+		//////////////////////////////
 		PriorityQueue<nodeTree> frontier = createFrontier();
 		insertFrontier(firstnode,frontier);
 
@@ -109,10 +109,10 @@ public class seconderiv {
 		}
 
 	}
-	/*
+	
 	 * 
 	 * Method to read the images from files
-	 */
+	 
 
 	public static BufferedImage chargeimage(String trace) throws IOException{
 		File file = new File(trace); 
@@ -135,9 +135,9 @@ public class seconderiv {
 			}
 		}
 	}
-	/*
+	
 	 * Create from the original image a black image in the first position of the array created
-	 */
+	 
 	public static void printarray(int[][] array){
 
 
@@ -167,9 +167,9 @@ public class seconderiv {
 		return (((npixels-nep)/npixels)>0.95);//IF THE IMAGE IS UNDER 95% OF SIMILARITY IS FALSE
 
 	}
-	/*
+	
 	 * We compare 2 arrays of images
-	 */
+	 
 	public static void compareimgs (BufferedImage[][] img, BufferedImage[][] img2) {		//PARA RESULTADO FINAL!
 		boolean result = true; 
 		outerloop:
@@ -194,9 +194,9 @@ public class seconderiv {
 			}
 		}
 	}
-	/*
+	
 	 * We calculate the position of the image comparing the clear one
-	 */
+	 
 	public static void findpos (BufferedImage[][] img, BufferedImage[][] img2, int [][] pos) {
 		boolean position;
 		for (int i = 0; i < img.length; i++) {
@@ -212,9 +212,9 @@ public class seconderiv {
 		}
 
 	}   
-	/*
+	
 	 * We create the full image from the BufferedImage array
-	 */
+	 
 	public static BufferedImage mergeimg (BufferedImage[][] img, int width, int height, int rows, int cols) throws IOException {
 		BufferedImage resimg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		Graphics g = resimg.getGraphics();
@@ -241,9 +241,9 @@ public class seconderiv {
 		return resimg;
 	}
 
-	/*
+	
 	 * Move to the left the black image
-	 */
+	 
 	public static PriorityQueue<nodeTree> createFrontier(){
 		return new PriorityQueue<nodeTree>(new Comparator<nodeTree>() {
 			public int compare(nodeTree e1, nodeTree e2) {
@@ -271,4 +271,4 @@ public class seconderiv {
 	public static boolean frontierIsEmpty(Queue<nodeTree> frontier){
 		return frontier.isEmpty();
 		}
-}
+}*/

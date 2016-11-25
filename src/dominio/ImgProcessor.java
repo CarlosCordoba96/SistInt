@@ -21,7 +21,8 @@ public class ImgProcessor {
 	private BufferedImage spimg2 [][];
 	private int [][] pos;
 	private int [] zero = new int [2];
-	
+	private int [] [] org;
+	private int [] orgzero = new int [2];
 	public ImgProcessor (int rows, int cols, String trace1, String trace2) throws IOException {
 		this.rows = rows;
 		this.cols = cols;
@@ -30,14 +31,24 @@ public class ImgProcessor {
 		spimg = createimgarray (rows, cols);
 		spimg2 = createimgarray (rows, cols);
 		pos = new int [rows][cols];
-		
+		org= new int [rows][cols];
 		spliting (rows, cols, img, spimg);
 		spliting (rows, cols, img2, spimg2);
 		findpos(spimg, spimg2, pos);
+		findpos(spimg,spimg,org);
 		whereiszero (pos, zero);
-		printarray(pos);
+		whereiszero (org, orgzero);
+
 	}
 	
+	public int[][] getOrg() {
+		return org;
+	}
+
+	public void setOrg(int[][] org) {
+		this.org = org;
+	}
+
 	public BufferedImage [][] createimgarray (int rows, int cols) {		
 		BufferedImage image [][] = new BufferedImage[rows][cols];
 		return image;
@@ -86,7 +97,7 @@ public class ImgProcessor {
 		for (int i = 0; i < img.length; i++) {
 			for (int j = 0; j < img[i].length; j++) {
 				for (int x = 0; x < img2.length; x++) {
-					for (int y = 0; y < img2.length; y++) {
+					for (int y = 0; y < img2[x].length; y++) {
 						position = compareminimg(img2[i][j], img[x][y]);
 						if (position == true)
 							pos[i][j] = (x *10) + y;
