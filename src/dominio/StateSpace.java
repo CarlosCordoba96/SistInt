@@ -1,5 +1,6 @@
 package dominio;
 
+import java.util.Arrays;
 import java.util.Stack;
 
 public class StateSpace {
@@ -25,11 +26,7 @@ public class StateSpace {
 		this.icero = xcero;
 		this.jcero = ycero;
 	}
-	/*
-	 * El puzzle, el array de numeros o de imagenes?
-	 *METHODS:
-	 *isValid isGoal succesor		
-	 */
+
 
 	public  boolean isValid(char c){
 		boolean sol=false;
@@ -74,6 +71,7 @@ public class StateSpace {
 		}
 		return movements;
 	}
+	
 	public void generatesuccesor(Stack <StateSpace> succesors,char mov, int[][] p){
 		move(mov,p);
 		StateSpace StateSpacenew;
@@ -100,7 +98,6 @@ public class StateSpace {
 		Stack<StateSpace> s = new Stack<StateSpace>();
 		Stack<Character> posmov=posiblemov();
 		while(!posmov.isEmpty()){
-			//pop del posible mov hacer movimiento y creamos un StateSpace  nuevo, push en s
 			generatesuccesor(s,posmov.pop(),copyarr(this.puzzle));
 		}
 		
@@ -182,4 +179,13 @@ public class StateSpace {
 		}
 		return a;
 	}
+		public boolean isGoal( StateSpace sol) {
+			  boolean goal = false;
+			  
+			  if (Arrays.deepEquals(getPuzzle(), sol.getPuzzle()))
+			   goal = true;
+			 
+			  return goal;
+			 }
+	
 }

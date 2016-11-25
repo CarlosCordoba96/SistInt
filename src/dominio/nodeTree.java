@@ -61,15 +61,19 @@ public class nodeTree {
 	public char getAction() {
 		return action;
 	}
+	
 	public void setAction(char action) {
 		this.action = action;
 	}
+	
 	public float getValue() {
 		return value;
 	}
+	
 	public void setValue(int value) {
 		this.value = value;
 	}
+	
 	public void getPath(Queue<Character> q){
 		
 		 while(parent!=null){
