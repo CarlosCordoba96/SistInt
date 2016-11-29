@@ -7,15 +7,18 @@ public class nodeTree {
     StateSpace StateSpace;
 	private int partialCost;
 	private char action;
-	private float value;
 	private int depth;
+	private float value;
 	
-	public nodeTree(nodeTree parent, StateSpace StateSpace, char action,String strat,int Mdepth){
+	public nodeTree(nodeTree parent, StateSpace StateSpace, char action,String strat,int Mdepth) throws MdepthException{
 		this.parent=parent;
 		this.StateSpace=StateSpace;
 		this.action=action;
 		this.partialCost= parent.getPartialCost()+1;
 		this.depth=parent.getDepth()+1;
+		if (depth > Mdepth) {
+			throw new MdepthException();
+		}
 		
 		if(strat.equals("BFS")){
 			this.value=this.depth;
@@ -25,6 +28,7 @@ public class nodeTree {
 			this.value=this.partialCost;
 		}
 	}
+
 	public nodeTree(StateSpace StateSpace){
 		this.parent=null;
 		this.StateSpace=StateSpace;

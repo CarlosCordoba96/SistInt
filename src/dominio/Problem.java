@@ -34,6 +34,7 @@ public class Problem {
 		StateSpace ssbuff;
 		nodeTree actualNode = null;
 		qbuff.add(initialNode);
+		nodeTree newnode = null;
 		
 		boolean sol = false;
 		
@@ -45,7 +46,14 @@ public class Problem {
 				sbuff = actualNode.getStateSpace().succesor();
 				while(!sbuff.isEmpty()){
 					ssbuff = sbuff.pop();
-					qbuff.add(new nodeTree(actualNode,ssbuff,ssbuff.action,strat,maxdepth));
+					try {
+						newnode = new nodeTree(actualNode,ssbuff,ssbuff.action,strat,maxdepth);
+					} catch (MdepthException e) {
+						newnode = null;
+						continue;
+					}
+					if (newnode != null)
+					qbuff.add(newnode);
 				}
 			}
 		}
