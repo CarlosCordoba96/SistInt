@@ -1,7 +1,10 @@
 package dominio;
 
 import java.util.Arrays;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Stack;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class StateSpace {
 	private static int n_rows;
@@ -72,9 +75,9 @@ public class StateSpace {
 		return movements;
 	}
 	
-	public void generatesuccesor(Stack <StateSpace> succesors,char mov, int[][] p){
+	public void generatesuccesor(Queue<StateSpace> succesors,char mov, int[][] p){
 		move(mov,p);
-		StateSpace StateSpacenew;
+		StateSpace StateSpacenew = null;
 		switch(mov){
 			case 'u':
 				StateSpacenew=new StateSpace(n_rows,n_cols,this.icero++, this.jcero,p,mov);
@@ -92,10 +95,10 @@ public class StateSpace {
 				StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero,p,mov);
 			break;
 		}
-		succesors.push(StateSpacenew);
+		succesors.add(StateSpacenew);
 	}
-	public Stack<StateSpace> succesor(){
-		Stack<StateSpace> s = new Stack<StateSpace>();
+	public Queue<StateSpace> succesor(){
+		Queue<StateSpace> s = new LinkedBlockingQueue<StateSpace>();
 		Stack<Character> posmov=posiblemov();
 		while(!posmov.isEmpty()){
 			generatesuccesor(s,posmov.pop(),copyarr(this.puzzle));

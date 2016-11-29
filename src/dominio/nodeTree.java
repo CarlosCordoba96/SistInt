@@ -79,12 +79,11 @@ public class nodeTree {
 	}
 	
 	public void getPath(Queue<Character> q){
-		
-		 while(parent!=null){
-			   parent.getParent();
-			   q.add(action);
-			  }
-		
+		if(!(this.parent == null)){
+			this.parent.getPath(q);
+		}
+		if(this.action != ' ')
+			q.add(this.action);
 	}
 	
 }
