@@ -1,6 +1,7 @@
 package dominio;
 
 import java.io.IOException;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class Main {
@@ -26,7 +27,7 @@ public class Main {
 		int cols = 4;	  
 		//int cols=sc.nextInt();
 		
-		System.out.println("Which type of algorithm you want: BFS, DFS, IPS, UCS");
+		System.out.println("Which type of algorithm you want: BFS, DFS, DLS, IDS, UCS");
 		String strat=sc.next();
 		
 		
@@ -38,23 +39,36 @@ public class Main {
 		StateSpace initialstate= new StateSpace(rows,cols,cero[0],cero[1],pos);
 		
 		Problem p = new Problem(goal,initialstate);
-
+		int maxDepth=Integer.MAX_VALUE;
+		int incrDepth;
+		
+		Queue<Character> s=null;
 		switch(strat){
 		case "BFS":
+			s=p.acSolve(strat, maxDepth);
 			//p.search(strat, maxdepth, initialdepth)
 			break;
 		case "DFS":
+			s=p.acSolve(strat, maxDepth);
 			
 			break;
-		case "IPS":
-			
+		case "DLS":
+			System.out.println("Introduce the Max Depth:");
+			maxDepth=sc.nextInt();
+			s=p.acSolve(strat, maxDepth);
 			break;
-			
+		case "IDS":
+			System.out.println("Introduce the Max Depth:");
+			maxDepth=sc.nextInt();
+			System.out.println("Introduce the incremental Depth:");
+			incrDepth=sc.nextInt();
+			s=p.search(strat, maxDepth, incrDepth);
+			break;
 		case "UCS":
-			
+			s=p.acSolve(strat, maxDepth);
 			break;
 		}
-		
+		System.out.println(s.toString());
 		
 		
 		

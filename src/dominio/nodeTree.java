@@ -24,7 +24,7 @@ public class nodeTree {
 			
 			this.value=this.depth;
 			
-		}else if(strat.equals("DFS") ||strat.equals("DLS")|| strat.equals("IPS") ){
+		}else if(strat.equals("DFS") ||strat.equals("DLS")|| strat.equals("IDS") ){
 			
 			this.value=-this.depth;
 			

@@ -18,7 +18,7 @@ public class Problem {
 		this.initialState=initialState;
 	}
 	
-	private Queue<Character> acSolve(String strat, int maxdepth){
+	public Queue<Character> acSolve(String strat, int maxdepth){
 		double stime=System.currentTimeMillis();
 		Queue<Character> rtrn = new PriorityQueue<Character>();
 		Queue<nodeTree> qbuff = createFrontier();
