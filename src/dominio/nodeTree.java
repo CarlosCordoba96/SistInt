@@ -21,10 +21,15 @@ public class nodeTree {
 		}
 		
 		if(strat.equals("BFS")){
+			
 			this.value=this.depth;
+			
 		}else if(strat.equals("DFS") ||strat.equals("DLS")|| strat.equals("IPS") ){
+			
 			this.value=-this.depth;
+			
 		}else if(strat.equals("UCS")){
+			
 			this.value=this.partialCost;
 		}
 	}

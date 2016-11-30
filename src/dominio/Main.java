@@ -26,6 +26,10 @@ public class Main {
 		int cols = 4;	  
 		//int cols=sc.nextInt();
 		
+		System.out.println("Which type of algorithm you want: BFS, DFS, IPS, UCS");
+		String strat=sc.next();
+		
+		
 		ImgProcessor img= new ImgProcessor(rows,cols,img1,img2);
 		int cero[]=img.getZero();
 		int pos [][]=img.getPos();

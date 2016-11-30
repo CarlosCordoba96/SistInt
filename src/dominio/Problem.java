@@ -39,14 +39,15 @@ public class Problem {
 			}else{
 				sbuff = actualNode.getStateSpace().succesor();
 				printarray(actualNode.getStateSpace().getPuzzle());
+				System.out.println();
 				while(!sbuff.isEmpty()){
 					ssbuff = sbuff.poll();
 					try {
 						newnode = new nodeTree(actualNode,ssbuff,ssbuff.action,strat,maxdepth);
 						
 					} catch (MdepthException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						newnode=null;
+						continue;
 					}
 					if(newnode !=null){
 						insertFrontier(newnode,qbuff);
@@ -70,8 +71,9 @@ public Queue<Character> search(StateSpace s, String strat,int maxdepth, int init
 		
 		int actualdepth = initialdepth;
 		Queue<Character> q = new PriorityQueue<Character>();
+		
 		while(q.isEmpty() && actualdepth <= maxdepth){
-			q = acSolve(strat,actualdepth);
+			q = acSolve(strat,maxdepth);
 			actualdepth += initialdepth;
 		}
 		return q;
