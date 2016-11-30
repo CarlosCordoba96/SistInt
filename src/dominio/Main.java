@@ -38,6 +38,27 @@ public class Main {
 		StateSpace initialstate= new StateSpace(rows,cols,cero[0],cero[1],pos);
 		
 		Problem p = new Problem(goal,initialstate);
+
+		switch(strat){
+		case "BFS":
+			//p.search(strat, maxdepth, initialdepth)
+			break;
+		case "DFS":
+			
+			break;
+		case "IPS":
+			
+			break;
+			
+		case "UCS":
+			
+			break;
+		}
+		
+		
+		
+		
+		
 	}
 
 }

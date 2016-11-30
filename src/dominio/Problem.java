@@ -1,6 +1,7 @@
 package dominio;
 
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
@@ -38,8 +39,7 @@ public class Problem {
 				sol = true;
 			}else{
 				sbuff = actualNode.getStateSpace().succesor();
-				printarray(actualNode.getStateSpace().getPuzzle());
-				System.out.println();
+				
 				while(!sbuff.isEmpty()){
 					ssbuff = sbuff.poll();
 					try {
@@ -59,23 +59,26 @@ public class Problem {
 			
 			double endtime=System.currentTimeMillis();
 			time=(endtime-stime)/1000;
-			System.out.println("Hay solución");
+			
 			actualNode.getPath(rtrn);
-			System.out.println("He salido");
 			return rtrn;
 		}
-		return null;
+		return rtrn;
 	}
 	
-public Queue<Character> search(StateSpace s, String strat,int maxdepth, int initialdepth){
+public Queue<Character> search(String strat,int maxdepth, int incremdepth){
 		
-		int actualdepth = initialdepth;
-		Queue<Character> q = new PriorityQueue<Character>();
-		
-		while(q.isEmpty() && actualdepth <= maxdepth){
-			q = acSolve(strat,maxdepth);
-			actualdepth += initialdepth;
+		int actualdepth = incremdepth;
+		Queue<Character> q = new LinkedList<Character>();
+		int n=0;
+		while(q.isEmpty() && actualdepth <= maxdepth){//only 1 time all strategies except iterative
+			q = acSolve(strat,actualdepth);
+			System.out.println("Depth: " +actualdepth);
+			actualdepth += incremdepth;//increment of the depth
+			n++;
+			
 		}
+		System.out.println("N times el bucle: "+n);
 		return q;
 	}
 	
@@ -115,6 +118,7 @@ public Queue<Character> search(StateSpace s, String strat,int maxdepth, int init
 			}
 			System.out.print("\n");
 		}
+		System.out.print("\n");
 	}
 
 }
