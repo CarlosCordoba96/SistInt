@@ -17,18 +17,22 @@ public class Main {
 	public static void init() throws IOException{
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Introduce the original image: ");
-		String img1=/*"pics/AlhambraInicialPuzzle4x4.png";*/			"pics/Inicialalhambra10x5.png";
+		String img1="pics/AlhambraInicialPuzzle4x4.png";
+		/*String img1="pics/Inicialalhambra10x5.png";*/
+		
 		//String img1=sc.next();
 		
 		System.out.println("Introduce the disordered image: ");
-		String img2=/*"pics/IntermedioAlhambra41.png";*/					"pics/IntermedioAlhambra10x5.png";
+		String img2="pics/IntermedioAlhambra41.png";
+		/*String img2="pics/IntermedioAlhambra10x5.png";*/
+		
 		//String img2=sc.next();
 		
 		System.out.println("Introduce the number of rows: ");
-		int rows = 5;
+		int rows = 4;
 		//int rows=sc.nextInt();
 		System.out.println("Introduce the numer of cols: ");
-		int cols = 10;
+		int cols = 4;
 		//int cols=sc.nextInt();
 		
 		System.out.println("Which type of algorithm you want: BFS, DFS, DLS, IDS, UCS");
@@ -97,8 +101,8 @@ public class Main {
 						"Statistics resulting from solving the problem:\n" +
 						"Strategy used: " + strat + "\n" +
 						"Number of movements: " + l.size() + "\n" +
-						"Visited nodes = " + p.getCreatednodes() + "\n" +
-						"Created nodes = " + p.getVisitednodes() + "\n" +
+						"Visited nodes = " + p.getVisitednodes() + "\n" +
+						"Created nodes = " + p.getCreatednodes() + "\n" +
 						"Time invested = " + p.getTime() + "\n" +
 						"\n"+
 						"Created By Alvaro Angel-Moreno Pinilla, Carlos Córdoba Ruiz & Roberto Plaza Romero");
