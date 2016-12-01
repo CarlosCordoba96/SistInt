@@ -43,6 +43,7 @@ public class Main {
 		int incrDepth;
 		
 		Queue<Character> s=null;
+		
 		switch(strat){
 		case "BFS":
 			s=p.acSolve(strat, maxDepth);
@@ -68,6 +69,7 @@ public class Main {
 			s=p.acSolve(strat, maxDepth);
 			break;
 		}
+		
 		System.out.println(s.toString());
 		
 		

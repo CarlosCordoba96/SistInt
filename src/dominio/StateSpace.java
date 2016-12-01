@@ -1,6 +1,7 @@
 package dominio;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Stack;
@@ -98,7 +99,7 @@ public class StateSpace {
 		succesors.add(StateSpacenew);
 	}
 	public Queue<StateSpace> succesor(){
-		Queue<StateSpace> s = new LinkedBlockingQueue<StateSpace>();
+		Queue<StateSpace> s = new LinkedList<StateSpace>();
 		Stack<Character> posmov=posiblemov();
 		while(!posmov.isEmpty()){
 			generatesuccesor(s,posmov.pop(),copyarr(this.puzzle));
