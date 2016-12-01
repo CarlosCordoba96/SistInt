@@ -4,17 +4,27 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+//import java.lang.*;
+
+import presentacion.Puzzle;
+
 import java.awt.image.PixelGrabber;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 import java.awt.*;
 
 public class ImgProcessor {
 	private int rows;
 	private int cols;
+	private int width;
+	private int height;
+	private int splitwidth;
+	private int splitheight;
 	private BufferedImage img;
 	private BufferedImage img2;
 	private BufferedImage spimg [][];
@@ -23,17 +33,24 @@ public class ImgProcessor {
 	private int [] zero = new int [2];
 	private int [] [] org;
 	private int [] orgzero = new int [2];
+	
 	public ImgProcessor (int rows, int cols, String trace1, String trace2) throws IOException {
 		this.rows = rows;
 		this.cols = cols;
 		this.img = chargeimage(trace1);
 		this.img2 = chargeimage(trace2);
+		this.width = img.getWidth();
+		this.height = img.getHeight();
+		this.splitwidth = width/cols;
+		this.splitheight = height/rows;
+		
 		spimg = createimgarray (rows, cols);
 		spimg2 = createimgarray (rows, cols);
+		
 		pos = new int [rows][cols];
 		org= new int [rows][cols];
-		spliting (rows, cols, img, spimg);
-		spliting (rows, cols, img2, spimg2);
+		spliting (rows, cols, splitwidth, splitheight, img, spimg);
+		spliting (rows, cols, splitwidth, splitheight, img2, spimg2);
 		findpos(spimg, spimg2, pos);
 		findpos(spimg,spimg,org);
 		whereiszero (pos, zero);
@@ -72,7 +89,8 @@ public class ImgProcessor {
 	/*
 	 * Split the image and store each sub-image in each position of the array
 	 */
-	public  void spliting (int rows, int cols, BufferedImage image, BufferedImage[][] imgs) throws IOException {
+	
+	/*public  void spliting (int rows, int cols, BufferedImage image, BufferedImage[][] imgs) throws IOException {
 		int splitWidth = image.getWidth()/rows;
 		int splitHeight = image.getHeight()/cols;	
 		for (int x = 0; x < rows; x++) {
@@ -87,7 +105,22 @@ public class ImgProcessor {
 				gr.dispose();
 			}
 		}
-	}
+	}*/
+	
+    public static void spliting (int rows, int cols, int splitWidth, int splitHeight, BufferedImage image, BufferedImage[][] imgs) throws IOException {
+    	for (int x = 0; x < rows; x++) {
+            for (int y = 0; y < cols; y++) {
+                //Initialize the image array with image chunks
+                imgs[x][y] = new BufferedImage(splitWidth, splitHeight, image.getType());
+
+                // draws the image chunk
+                Graphics2D gr = imgs[x][y].createGraphics();
+                gr.drawImage(image, 0, 0, splitWidth, splitHeight, splitWidth * y, splitHeight * x,
+                		splitWidth * y + splitWidth, splitHeight * x + splitHeight, null);
+                gr.dispose();
+            }
+        }
+    }
 	
 	/*
 	 * We calculate the position of the image comparing the clear one
@@ -181,6 +214,7 @@ public class ImgProcessor {
 	/*
 	 * We create the full image from the BufferedImage array
 	 */
+	
 	public BufferedImage mergeimg (BufferedImage[][] img, int width, int height, int rows, int cols) throws IOException {
 		BufferedImage resimg = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		Graphics g = resimg.getGraphics();
@@ -205,6 +239,42 @@ public class ImgProcessor {
 		}	    
 		//ImageIO.write(resimg,"png",new File("result.png"));//MIX THE MATRIX IN JUST ONE IMAGE 
 		return resimg;
+	}
+	
+	/*
+	 * Show the solution step by step
+	 */
+	
+	public void showpath (Queue <Character> q) throws IOException, InterruptedException {
+		Puzzle p = new Puzzle();
+		BufferedImage img;
+		for (char c : q) {
+			switch (c) {
+			case 'l' :
+				moveleft(spimg2, pos, zero);
+				break;
+				
+			case 'r' :
+				moveright(spimg2, pos, zero);
+				break;
+				
+			case 'u' :
+				moveup(spimg2, pos, zero);
+				break;
+				
+			case 'd' :
+				movedown(spimg2, pos, zero);
+				break;
+			}
+			img = mergeimg(spimg2, width, height, rows, cols);
+			p.printimg(img);
+			Thread.sleep(1000);
+		}
+	}
+	public void print() throws IOException{
+		Puzzle p = new Puzzle();
+		img = mergeimg(spimg2, width, height, rows, cols);
+		p.printimg(img);
 	}
 	
 	/*
