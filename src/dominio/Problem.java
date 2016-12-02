@@ -51,7 +51,6 @@ public class Problem {
 				sbuff = actualNode.getStateSpace().succesor();
 				while(!sbuff.isEmpty()){
 					ssbuff = sbuff.poll();
-					//printarray(ssbuff.getPuzzle());
 					try {
 						newnode = new nodeTree(actualNode,ssbuff,ssbuff.action,strat,maxdepth);
 						this.creatednodes++;
@@ -69,7 +68,6 @@ public class Problem {
 
 			double endtime=System.currentTimeMillis();
 			time=(endtime-stime)/1000;
-
 			actualNode.getPath(rtrn);
 			return rtrn;
 		}
@@ -104,15 +102,11 @@ public class Problem {
 
 		int actualdepth = incremdepth;
 		Queue<Character> q = new LinkedList<Character>();
-		int n=0;
 		while(q.isEmpty() && actualdepth <= maxdepth){//only 1 time all strategies except iterative
 			q = acSolve(strat,actualdepth);
 			System.out.println("Depth: " +actualdepth);
 			actualdepth += incremdepth;//increment of the depth
-			n++;
-
 		}
-		System.out.println("N times el bucle: "+n);
 		return q;
 	}
 

@@ -15,51 +15,33 @@ public class Main {
 
 	}
 	public static void init() throws IOException{
+		int maxDepth=Integer.MAX_VALUE;
+		int incrDepth;
+		Queue<Character> s=null;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Introduce the original image: ");
-		String img1="pics/AlhambraInicialPuzzle4x4.png";
-		/*String img1="pics/Inicialalhambra10x5.png";*/
-		
-		//String img1=sc.next();
-		
-		System.out.println("Introduce the disordered image: ");
-		String img2="pics/IntermedioAlhambra41.png";
-		/*String img2="pics/IntermedioAlhambra10x5.png";*/
-		
-		//String img2=sc.next();
-		
+		System.out.println("Introduce the original image: ");		
+		String img1="pics/AlhambraInicialPuzzle4x4.png";		
+		//String img1="pics/"+sc.next();	
+		System.out.println("Introduce the disordered image: ");		
+		String img2="pics/IntermedioAlhambra41.png";		
+		//String img2="pics/"sc.next();
 		System.out.println("Introduce the number of rows: ");
-		int rows = 4;
-		//int rows=sc.nextInt();
+		int rows=sc.nextInt();
 		System.out.println("Introduce the numer of cols: ");
-		int cols = 4;
-		//int cols=sc.nextInt();
-		
+		int cols=sc.nextInt();
 		System.out.println("Which type of algorithm you want: BFS, DFS, DLS, IDS, UCS");
 		String strat=sc.next();
 		
-		
 		ImgProcessor img= new ImgProcessor(rows,cols,img1,img2);
-		img.print();
 		int cero[]=img.getZero();
 		int pos [][]=img.getPos();
 		int org [][]=img.getOrg();
 		StateSpace goal=new StateSpace(rows,cols,0,0,org);
-		StateSpace initialstate= new StateSpace(rows,cols,cero[0],cero[1],pos);
-		
+		StateSpace initialstate= new StateSpace(rows,cols,cero[0],cero[1],pos);	
 		Problem p = new Problem(goal,initialstate);
-		int maxDepth=Integer.MAX_VALUE;
-		int incrDepth;
 		
-		Queue<Character> s=null;
-		
-		/*printarray(pos);
-		printarray(org);
-		System.out.println(cero[0] + cero[1]);*/
-		
-		switch(strat){
-		case "BFS":
-			//p.printarray(p.getInitialState().getPuzzle());
+		switch(strat.toUpperCase()){
+		case "BFS":;
 			s=p.acSolve(strat, maxDepth);
 			break;
 		case "DFS":
@@ -81,13 +63,14 @@ public class Main {
 			s=p.acSolve(strat, maxDepth);
 			break;
 		}
-		
 		System.out.println(s.toString());
-		try {
-			img.showpath(s);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		System.out.println("Generating the solution...");
+			try {
+				img.showpath(s);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		savestatistics(p, s, rows, cols, strat);
 	}
 	
@@ -99,7 +82,7 @@ public class Main {
 			file.write(	"Problem consists in solving a " + rows + " times " + cols + " puzzle\n"+
 						"\n"+
 						"Statistics resulting from solving the problem:\n" +
-						"Strategy used: " + strat + "\n" +
+						"Strategy used: " + strat.toUpperCase() + "\n" +
 						"Number of movements: " + l.size() + "\n" +
 						"Visited nodes = " + p.getVisitednodes() + "\n" +
 						"Created nodes = " + p.getCreatednodes() + "\n" +

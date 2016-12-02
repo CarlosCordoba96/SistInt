@@ -1,0 +1,5 @@
+In order to execute the programs in Ubuntu, we should write:
+	
+	For the LinkedList.jar: java -jar Linkedlist.jar
+
+	For the PriorityQueue.jar: java -jar PriorityQueue.jar
