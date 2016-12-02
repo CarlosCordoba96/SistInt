@@ -68,6 +68,7 @@ public class Problem {
 
 			double endtime=System.currentTimeMillis();
 			time=(endtime-stime)/1000;
+
 			actualNode.getPath(rtrn);
 			return rtrn;
 		}
@@ -106,6 +107,7 @@ public class Problem {
 			q = acSolve(strat,actualdepth);
 			System.out.println("Depth: " +actualdepth);
 			actualdepth += incremdepth;//increment of the depth
+
 		}
 		return q;
 	}

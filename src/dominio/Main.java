@@ -19,19 +19,24 @@ public class Main {
 		int incrDepth;
 		Queue<Character> s=null;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Introduce the original image: ");		
-		String img1="pics/AlhambraInicialPuzzle4x4.png";		
-		//String img1="pics/"+sc.next();	
-		System.out.println("Introduce the disordered image: ");		
-		String img2="pics/IntermedioAlhambra41.png";		
-		//String img2="pics/"sc.next();
-		System.out.println("Introduce the number of rows: ");
-		int rows=sc.nextInt();
-		System.out.println("Introduce the numer of cols: ");
-		int cols=sc.nextInt();
-		System.out.println("Which type of algorithm you want: BFS, DFS, DLS, IDS, UCS");
-		String strat=sc.next();
+		System.out.println("Introduce the original image: ");
+		String img1="pics/AlhambraInicialPuzzle4x4.png";	
+		//String img1="pics/"+sc.next();
+		System.out.println("Introduce the disordered image: ");
+		String img2="pics/IntermedioAlhambra41.png";
 		
+		//String img2="pics/"sc.next();
+		
+		System.out.println("Introduce the number of rows: ");
+
+		int rows=sc.nextInt();
+		
+		System.out.println("Introduce the numer of cols: ");
+
+		int cols=sc.nextInt();
+		
+		System.out.println("Which type of algorithm you want: BFS, DFS, DLS, IDS, UCS");
+		String strat=sc.next().toUpperCase();
 		ImgProcessor img= new ImgProcessor(rows,cols,img1,img2);
 		int cero[]=img.getZero();
 		int pos [][]=img.getPos();
@@ -41,7 +46,7 @@ public class Main {
 		Problem p = new Problem(goal,initialstate);
 		
 		switch(strat.toUpperCase()){
-		case "BFS":;
+		case "BFS":
 			s=p.acSolve(strat, maxDepth);
 			break;
 		case "DFS":
@@ -63,8 +68,9 @@ public class Main {
 			s=p.acSolve(strat, maxDepth);
 			break;
 		}
+		
 		System.out.println(s.toString());
-		System.out.println("Generating the solution...");
+		System.out.println("Creating the solution...");
 			try {
 				img.showpath(s);
 			} catch (InterruptedException e) {
