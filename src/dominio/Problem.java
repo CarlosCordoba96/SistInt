@@ -105,7 +105,6 @@ public class Problem {
 		Queue<Character> q = new LinkedList<Character>();
 		while(q.isEmpty() && actualdepth <= maxdepth){//only 1 time all strategies except iterative
 			q = acSolve(strat,actualdepth);
-			System.out.println("Depth: " +actualdepth);
 			actualdepth += incremdepth;//increment of the depth
 
 		}

@@ -78,6 +78,8 @@ public class Main {
 				e.printStackTrace();
 			}
 		savestatistics(p, s, rows, cols, strat);
+		
+		System.exit(0);
 	}
 	
 	static void savestatistics(Problem p, Queue<Character> l, int rows, int cols, String strat){
