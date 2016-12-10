@@ -100,18 +100,18 @@ public class Problem {
 		this.creatednodes = creatednodes;
 	}
 
-	public Queue<Character> search(String strat,int maxdepth, int incremdepth){
+	 public Queue<Character> search(String strat,int maxdepth, int incremdepth){
 
-		int actualdepth = incremdepth;
-		Queue<Character> q = new LinkedList<Character>();
-		double stime=System.currentTimeMillis();
-		while(q.isEmpty() && actualdepth <= maxdepth){//only 1 time all strategies except iterative
-			q = acSolve(strat,actualdepth);
-			actualdepth += incremdepth;//increment of the depth
-		}
-		this.time=(System.currentTimeMillis()-stime)/1000;
-		return q;
-	}
+		  int actualdepth = incremdepth;
+		  Queue<Character> q = new LinkedList<Character>();
+		  double stime=System.currentTimeMillis();
+		  while(q.isEmpty() && actualdepth <= maxdepth){//only 1 time all strategies except iterative
+		   q = acSolve(strat,actualdepth);
+		   actualdepth += incremdepth;//increment of the depth
+		  }
+		  this.time=(System.currentTimeMillis()-stime)/1000;
+		  return q;
+		 }
 
 
 	public static PriorityQueue<nodeTree> createFrontier(){

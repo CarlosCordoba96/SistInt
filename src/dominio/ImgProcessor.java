@@ -153,6 +153,41 @@ public class ImgProcessor {
 			}
 		}
 		return true;
+		/*
+		 * if (img1.getWidth() != img2.getWidth() || img1.getHeight()!= img2.getHeight()) {
+			return false;
+		}
+		
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		ByteArrayOutputStream outputStream2 = new ByteArrayOutputStream();
+		try {
+			ImageIO.write(img1, "png", outputStream);
+			ImageIO.write(img2, "png", outputStream2);
+
+			byte[] data1 = outputStream.toByteArray();
+			byte[] data2 = outputStream2.toByteArray();
+
+			MessageDigest md1;
+			MessageDigest md2;
+			md1 = MessageDigest.getInstance("MD5");
+			md2 = MessageDigest.getInstance("MD5");
+
+			md1.update(data1);
+			md2.update(data2);
+			byte[] hash1 = md1.digest();
+			byte[] hash2 = md2.digest();
+			
+			if 	(!Arrays.equals(hash1,hash2)){
+				return false;
+			}
+			
+		} catch (NoSuchAlgorithmException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return true;
+	
+		 */
 	}
 	
 	/*

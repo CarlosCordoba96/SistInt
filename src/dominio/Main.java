@@ -38,15 +38,6 @@ public class Main {
 
 		System.out.println("Which type of algorithm you want: BFS, DFS, DLS, IDS, UCS, A*");
 		String strat=sc.next().toUpperCase();
-
-		ImgProcessor img= new ImgProcessor(rows,cols,img1,img2);
-		int cero[]=img.getZero();
-		int pos [][]=img.getPos();
-		int org [][]=img.getOrg();
-		StateSpace goal=new StateSpace(rows,cols,0,0,org,org);
-		StateSpace initialstate= new StateSpace(rows,cols,cero[0],cero[1],pos,org);	
-		Problem p = new Problem(goal,initialstate);
-
 		switch(strat.toUpperCase()){
 		case "BFS":
 			incrDepth = maxDepth;
@@ -71,23 +62,42 @@ public class Main {
 		case "A*":
 			incrDepth = maxDepth;
 		}
+
+		System.out.println("Generating the image processor class");
+		ImgProcessor img= new ImgProcessor(rows,cols,img1,img2);
+		System.out.println("Image processor class generated");
+		int cero[]=img.getZero();
 		
+		int pos [][]=img.getPos();
+		int org [][]=img.getOrg();
+		StateSpace goal=new StateSpace(rows,cols,0,0,org,org);
+		StateSpace initialstate= new StateSpace(rows,cols,cero[0],cero[1],pos,org);	
+		Problem p = new Problem(goal,initialstate);
+		 if(p.getInitialState().isGoal()){
+			   System.out.println("The puzzle isn't scrambled");
+			   System.exit(0);
+			  }
+
+		
+		System.out.println("Calculating solution...");
 		s=p.search(strat, maxDepth, incrDepth);
 		
 		if(!s.isEmpty()){
-			System.out.println(s.toString());
 			savestatistics(p, s, rows, cols, strat,s);
+			System.out.println("Solution generated:");
+			System.out.println(s.toString());
 		}else{
 			System.out.println("There is no solution");
 		}
-		System.out.println("Creating the solution...");
-
+		
+		System.out.println("Showing solution...");
 		try {
 			img.showpath(s);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		savestatistics(p, s, rows, cols, strat,s);
+		System.out.println("Program finished.");
+		
 
 		System.exit(0);
 	}
