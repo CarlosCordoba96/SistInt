@@ -36,25 +36,24 @@ public class ImgProcessor {
 	
 	public ImgProcessor (int rows, int cols, String trace1, String trace2) throws IOException {
 		this.rows = rows;
-		this.cols = cols;
-		this.img = chargeimage(trace1);
-		this.img2 = chargeimage(trace2);
-		this.width = img.getWidth();
-		this.height = img.getHeight();
-		this.splitwidth = width/cols;
-		this.splitheight = height/rows;
-		
-		spimg = createimgarray (rows, cols);
-		spimg2 = createimgarray (rows, cols);
-		
-		pos = new int [rows][cols];
-		org= new int [rows][cols];
-		spliting (rows, cols, splitwidth, splitheight, img, spimg);
-		spliting (rows, cols, splitwidth, splitheight, img2, spimg2);
-		findpos(spimg, spimg2, pos);
-		findpos(spimg,spimg,org);
-		whereiszero (pos, zero);
-		whereiszero (org, orgzero);
+		  this.cols = cols;
+		  this.img = chargeimage(trace1);
+		  this.img2 = chargeimage(trace2);
+		  this.width = img.getWidth();
+		  this.height = img.getHeight();
+		  this.splitwidth = width/cols;
+		  this.splitheight = height/rows;
+		  spimg = createimgarray (rows, cols);
+		  spimg2 = createimgarray (rows, cols);
+		  pos = new int [rows][cols];
+		  org= new int [rows][cols];
+		  spliting (rows, cols, splitwidth, splitheight, img, spimg);
+		  createfirstblackimg(spimg);
+		  spliting (rows, cols, splitwidth, splitheight, img2, spimg2);
+		  findpos(spimg, spimg2, pos);
+		  findpos(spimg,spimg,org);
+		  whereiszero (pos, zero);
+		  whereiszero (org, orgzero);
 
 	}
 	

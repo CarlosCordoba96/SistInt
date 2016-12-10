@@ -4,12 +4,14 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.Stack;
 
 public class Problem {
 
 	private StateSpace goalState;
 	private StateSpace initialState;
+	private double time;
+	private int visitednodes = 0;
+	private int creatednodes = 0;
 	
 	public StateSpace getInitialState() {
 		return initialState;
@@ -19,9 +21,7 @@ public class Problem {
 		this.initialState = initialState;
 	}
 
-	private double time;
-	private int visitednodes = 0;
-	private int creatednodes = 0;
+
 
 	public Problem(StateSpace goalstate, StateSpace initialState){
 		this.goalState=goalstate;
@@ -29,7 +29,7 @@ public class Problem {
 	}
 
 	public Queue<Character> acSolve(String strat, int maxdepth){
-		double stime=System.currentTimeMillis();
+		
 		Queue<Character> rtrn = new LinkedList<Character>();
 		Queue<nodeTree> qbuff = createFrontier();
 
@@ -45,7 +45,7 @@ public class Problem {
 		while(!sol && !frontierIsEmpty(qbuff)){
 			actualNode = removeFirstFrontier(qbuff);
 			visitednodes++;
-			if(actualNode.getStateSpace().isGoal(goalState)){
+			if(actualNode.getStateSpace().isGoal()){
 				sol = true;
 			}else{
 				sbuff = actualNode.getStateSpace().succesor();
@@ -67,8 +67,8 @@ public class Problem {
 		}
 		if(sol){
 
-			double endtime=System.currentTimeMillis();
-			time=(endtime-stime)/1000;
+			
+			
 
 			actualNode.getPath(rtrn);
 			return rtrn;
@@ -104,11 +104,12 @@ public class Problem {
 
 		int actualdepth = incremdepth;
 		Queue<Character> q = new LinkedList<Character>();
+		double stime=System.currentTimeMillis();
 		while(q.isEmpty() && actualdepth <= maxdepth){//only 1 time all strategies except iterative
 			q = acSolve(strat,actualdepth);
 			actualdepth += incremdepth;//increment of the depth
-
 		}
+		this.time=(System.currentTimeMillis()-stime)/1000;
 		return q;
 	}
 

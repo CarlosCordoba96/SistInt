@@ -1,11 +1,11 @@
 Problem consists in solving a 4 times 5 puzzle
 
 Statistics resulting from solving the problem:
-Strategy used: IDS
+Strategy used: A*
 Number of movements: 6
 Movements :[u, u, u, l, l, l]
-Visited nodes = 1545
-Created nodes = 1544
-Time invested = 0.022
+Visited nodes = 7
+Created nodes = 20
+Time invested = 0.001
 
 Created By Alvaro Angel-Moreno Pinilla, Carlos Córdoba Ruiz & Roberto Plaza Romero

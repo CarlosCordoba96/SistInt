@@ -14,21 +14,24 @@ public class StateSpace {
 	private int jcero;
 	private final int [][] puzzle;
 	char action;
-	public StateSpace(int rows, int cols, int xcero, int ycero, int [][] puzzle){
+	private int [][] goalpuzzle;
+	
+	public StateSpace(int rows, int cols, int xcero, int ycero, int [][] puzzle,int[][]goal){
 		this.n_rows=rows;
 		this.n_cols=cols;
 		this.icero = xcero;
 		this.jcero = ycero;
 		this.puzzle=puzzle;
-
+		this.goalpuzzle=goal;
 	}
-	public StateSpace(int rows, int cols, int xcero, int ycero, int [][] puzzle,char action) {
+	public StateSpace(int rows, int cols, int xcero, int ycero, int [][] puzzle,char action,int[][]goal) {
 		this.n_rows=rows;
 		this.n_cols=cols;
 		this.puzzle=puzzle;
 		this.action=action;
 		this.icero = xcero;
 		this.jcero = ycero;
+		this.goalpuzzle=goal;
 	}
 
 
@@ -81,19 +84,19 @@ public class StateSpace {
 		StateSpace StateSpacenew = null;
 		switch(mov){
 		case 'u':
-			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero++, this.jcero,p,mov);
+			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero++, this.jcero,p,mov,goalpuzzle);
 			break;
 		case 'd':
-			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero--, this.jcero,p,mov);
+			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero--, this.jcero,p,mov,goalpuzzle);
 			break;
 		case 'l':
-			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero++,p,mov);
+			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero++,p,mov,goalpuzzle);
 			break;
 		case 'r':
-			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero--,p,mov);
+			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero--,p,mov,goalpuzzle);
 			break;
 		default:
-			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero,p,mov);
+			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero,p,mov,goalpuzzle);
 			break;
 		}
 		succesors.add(StateSpacenew);
@@ -183,10 +186,10 @@ public class StateSpace {
 		}
 		return a;
 	}
-	public boolean isGoal( StateSpace sol) {
+	public boolean isGoal( ) {
 		boolean goal = false;
 
-		if (Arrays.deepEquals(getPuzzle(), sol.getPuzzle()))
+		if (Arrays.deepEquals(puzzle,goalpuzzle))
 			goal = true;
 
 		return goal;
@@ -195,7 +198,7 @@ public class StateSpace {
 		int h=0;
 		for(int i=0;i<puzzle.length;i++){
 			for(int j=0;j<puzzle[i].length;j++){
-				if(puzzle[i][j]!= (i*10)+j){
+				if(puzzle[i][j] != goalpuzzle[i][j]){
 					h++;
 				}
 			}
