@@ -1,0 +1,11 @@
+Problem consists in solving a 4 times 5 puzzle
+
+Statistics resulting from solving the problem:
+Strategy used: BFS
+Number of movements: 6
+Movements :[u, u, u, l, l, l]
+Visited nodes = 1277
+Created nodes = 4276
+Time invested = 0.011
+
+Created By Alvaro Angel-Moreno Pinilla, Carlos Córdoba Ruiz & Roberto Plaza Romero

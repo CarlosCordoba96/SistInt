@@ -31,6 +31,8 @@ public class nodeTree {
 		}else if(strat.equals("UCS")){
 			
 			this.value=this.partialCost;
+		}else if(strat.equals("A*")){
+			value=partialCost +StateSpace.heuristic();// La heuristica tenemos que implementarlo, puede ser el nº de tiles descolocadas
 		}
 	}
 

@@ -13,14 +13,14 @@ public class StateSpace {
 	private int icero;
 	private int jcero;
 	private final int [][] puzzle;
-    char action;
+	char action;
 	public StateSpace(int rows, int cols, int xcero, int ycero, int [][] puzzle){
 		this.n_rows=rows;
 		this.n_cols=cols;
 		this.icero = xcero;
 		this.jcero = ycero;
 		this.puzzle=puzzle;
-		
+
 	}
 	public StateSpace(int rows, int cols, int xcero, int ycero, int [][] puzzle,char action) {
 		this.n_rows=rows;
@@ -58,7 +58,7 @@ public class StateSpace {
 		}
 		return sol;
 	}
-	
+
 	public  Stack<Character> posiblemov(){
 		Stack<Character> movements = new Stack<Character>();
 		if(isValid('u')){
@@ -75,25 +75,25 @@ public class StateSpace {
 		}
 		return movements;
 	}
-	
+
 	public void generatesuccesor(Queue<StateSpace> succesors,char mov, int[][] p){
 		move(mov,p);
 		StateSpace StateSpacenew = null;
 		switch(mov){
-			case 'u':
-				StateSpacenew=new StateSpace(n_rows,n_cols,this.icero++, this.jcero,p,mov);
-				break;
-			case 'd':
-				StateSpacenew=new StateSpace(n_rows,n_cols,this.icero--, this.jcero,p,mov);
+		case 'u':
+			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero++, this.jcero,p,mov);
 			break;
-			case 'l':
-				StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero++,p,mov);
+		case 'd':
+			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero--, this.jcero,p,mov);
 			break;
-			case 'r':
-				StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero--,p,mov);
+		case 'l':
+			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero++,p,mov);
 			break;
-			default:
-				StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero,p,mov);
+		case 'r':
+			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero--,p,mov);
+			break;
+		default:
+			StateSpacenew=new StateSpace(n_rows,n_cols,this.icero, this.jcero,p,mov);
 			break;
 		}
 		succesors.add(StateSpacenew);
@@ -104,37 +104,37 @@ public class StateSpace {
 		while(!posmov.isEmpty()){
 			generatesuccesor(s,posmov.pop(),copyarr(this.puzzle));
 		}
-		
+
 		return s;
 	}
 	public int[][] getPuzzle() {
 		return puzzle;
 	}
 	private void move(char c, int [][]arr){
-		
+
 		switch(c){
-			case 'u':
-				arr[icero][jcero] = arr[icero-1][jcero];
-				arr[icero-1][jcero] = 0;
-				this.icero--;
-				break;
-			case 'd':
-				arr[icero][jcero] = arr[icero+1][jcero];
-				arr[icero+1][jcero] = 0;
-				this.icero++;
-				break;
-			case 'l':
-				arr[icero][jcero] = arr[icero][jcero-1];
-				arr[icero][jcero-1] = 0;
-				this.jcero--;
-				break;
-			case 'r':
-				arr[icero][jcero] = arr[icero][jcero+1];
-				arr[icero][jcero+1] = 0;
-				this.jcero++;
-				break;
+		case 'u':
+			arr[icero][jcero] = arr[icero-1][jcero];
+			arr[icero-1][jcero] = 0;
+			this.icero--;
+			break;
+		case 'd':
+			arr[icero][jcero] = arr[icero+1][jcero];
+			arr[icero+1][jcero] = 0;
+			this.icero++;
+			break;
+		case 'l':
+			arr[icero][jcero] = arr[icero][jcero-1];
+			arr[icero][jcero-1] = 0;
+			this.jcero--;
+			break;
+		case 'r':
+			arr[icero][jcero] = arr[icero][jcero+1];
+			arr[icero][jcero+1] = 0;
+			this.jcero++;
+			break;
 		}
-		
+
 	}
 	public  boolean ispossUp(){
 		boolean posible=false;
@@ -183,13 +183,23 @@ public class StateSpace {
 		}
 		return a;
 	}
-		public boolean isGoal( StateSpace sol) {
-			  boolean goal = false;
-			  
-			  if (Arrays.deepEquals(getPuzzle(), sol.getPuzzle()))
-			   goal = true;
-			 
-			  return goal;
-			 }
-	
+	public boolean isGoal( StateSpace sol) {
+		boolean goal = false;
+
+		if (Arrays.deepEquals(getPuzzle(), sol.getPuzzle()))
+			goal = true;
+
+		return goal;
+	}
+	public int heuristic(){
+		int h=0;
+		for(int i=0;i<puzzle.length;i++){
+			for(int j=0;j<puzzle[i].length;j++){
+				if(puzzle[i][j]!= (i*10)+j){
+					h++;
+				}
+			}
+		}
+		return h;
+	}
 }

@@ -56,6 +56,7 @@ public class Problem {
 						this.creatednodes++;
 					} catch (MdepthException e) {
 						newnode=null;
+						
 						continue;
 					}
 					if(newnode !=null){

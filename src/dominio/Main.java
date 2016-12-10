@@ -20,12 +20,13 @@ public class Main {
 		Queue<Character> s=null;
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Introduce the original image: ");
-		String img1="pics/AlhambraInicialPuzzle4x4.png";	
-		//String img1="pics/"+sc.next();
+		//String img1="pics/AlhambraInicialPuzzle4x4.png";	
+		String img1="pics/"+sc.next();
 		System.out.println("Introduce the disordered image: ");
-		String img2="pics/IntermedioAlhambra41.png";
+		//String img2="pics/IntermedioAlhambra41.png";
+		///SistInt/pics/droneInitial5x4.png
 		
-		//String img2="pics/"sc.next();
+		String img2="pics/"+sc.next();
 		
 		System.out.println("Introduce the number of rows: ");
 
@@ -37,6 +38,7 @@ public class Main {
 		
 		System.out.println("Which type of algorithm you want: BFS, DFS, DLS, IDS, UCS");
 		String strat=sc.next().toUpperCase();
+		
 		ImgProcessor img= new ImgProcessor(rows,cols,img1,img2);
 		int cero[]=img.getZero();
 		int pos [][]=img.getPos();
@@ -71,27 +73,29 @@ public class Main {
 		
 		System.out.println(s.toString());
 		System.out.println("Creating the solution...");
+		
 			try {
 				img.showpath(s);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		savestatistics(p, s, rows, cols, strat);
+		savestatistics(p, s, rows, cols, strat,s);
 		
 		System.exit(0);
 	}
 	
-	static void savestatistics(Problem p, Queue<Character> l, int rows, int cols, String strat){
+	static void savestatistics(Problem p, Queue<Character> l, int rows, int cols, String strat,Queue s){
 
 		try{
-			Writer file = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("statistics.dat"), "utf-8"));
+			Writer file = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("statistics"+strat+".dat"), "utf-8"));
 		
 			file.write(	"Problem consists in solving a " + rows + " times " + cols + " puzzle\n"+
 						"\n"+
 						"Statistics resulting from solving the problem:\n" +
 						"Strategy used: " + strat.toUpperCase() + "\n" +
 						"Number of movements: " + l.size() + "\n" +
+						"Movements :"+ s.toString()+"\n"+
 						"Visited nodes = " + p.getVisitednodes() + "\n" +
 						"Created nodes = " + p.getCreatednodes() + "\n" +
 						"Time invested = " + p.getTime() + "\n" +

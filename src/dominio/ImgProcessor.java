@@ -230,6 +230,7 @@ public class ImgProcessor {
 		BufferedImage img;
 		img = mergeimg(spimg2, width, height, rows, cols);
 		p.printimg(img);
+		Thread.sleep(500);
 		for (char c : q) {
 			switch (c) {
 			case 'l' :
