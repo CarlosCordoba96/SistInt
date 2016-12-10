@@ -28,7 +28,7 @@ public class Problem {
 		this.initialState=initialState;
 	}
 
-	public Queue<Character> acSolve(String strat, int maxdepth){
+	public Queue<Character> acSolve(String strat, int maxdepth) throws MaxMemoryException{
 		
 		Queue<Character> rtrn = new LinkedList<Character>();
 		Queue<nodeTree> qbuff = createFrontier();
@@ -41,8 +41,15 @@ public class Problem {
 		nodeTree newnode =null;
 
 		insertFrontier(initialNode,qbuff);
+		
+		while(!sol && !frontierIsEmpty(qbuff)){	
+			Runtime runtime = Runtime.getRuntime();
+			long memory = runtime.totalMemory() - runtime.freeMemory();
+			if(bytesToMegabytes(memory)>=1500){//Limit the memory consumption to 1,5GB
+				throw new MaxMemoryException();
+			}
+				
 
-		while(!sol && !frontierIsEmpty(qbuff)){
 			actualNode = removeFirstFrontier(qbuff);
 			visitednodes++;
 			if(actualNode.getStateSpace().isGoal()){
@@ -106,7 +113,14 @@ public class Problem {
 		  Queue<Character> q = new LinkedList<Character>();
 		  double stime=System.currentTimeMillis();
 		  while(q.isEmpty() && actualdepth <= maxdepth){//only 1 time all strategies except iterative
-		   q = acSolve(strat,actualdepth);
+			  try{
+				  q = acSolve(strat,actualdepth);
+			  }catch (Exception e) {
+				System.out.println("Maximum memory achieved: 1,5 GB");
+				break;
+			}
+			  
+		   
 		   actualdepth += incremdepth;//increment of the depth
 		  }
 		  this.time=(System.currentTimeMillis()-stime)/1000;
@@ -141,6 +155,10 @@ public class Problem {
 	public static boolean frontierIsEmpty(Queue<nodeTree> frontier){
 		return frontier.isEmpty();
 	}
+	public static long bytesToMegabytes(long bytes) {
+		long MEGABYTE = 1024L * 1024L;
+            return bytes / MEGABYTE;
+    }
 
 	public static void printarray(int [][] a){
 		for(int i = 0; i < a.length ; i ++){

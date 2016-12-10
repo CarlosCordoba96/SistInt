@@ -63,9 +63,8 @@ public class Main {
 			incrDepth = maxDepth;
 		}
 
-		System.out.println("Generating the image processor class");
 		ImgProcessor img= new ImgProcessor(rows,cols,img1,img2);
-		System.out.println("Image processor class generated");
+
 		int cero[]=img.getZero();
 		
 		int pos [][]=img.getPos();
@@ -80,15 +79,18 @@ public class Main {
 
 		
 		System.out.println("Calculating solution...");
+		
 		s=p.search(strat, maxDepth, incrDepth);
 		
-		if(!s.isEmpty()){
+		if(s.isEmpty()){
+			
+			System.out.println("There is no solution");
+		}else{
 			savestatistics(p, s, rows, cols, strat,s);
 			System.out.println("Solution generated:");
 			System.out.println(s.toString());
-		}else{
-			System.out.println("There is no solution");
-		}
+			
+		
 		
 		System.out.println("Showing solution...");
 		try {
@@ -96,11 +98,14 @@ public class Main {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 		System.out.println("Program finished.");
 		
-
+		}
 		System.exit(0);
 	}
+
+    
 
 	static void savestatistics(Problem p, Queue<Character> l, int rows, int cols, String strat,Queue s){
 
