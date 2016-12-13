@@ -1,11 +1,11 @@
-Problem consists in solving a 4 times 5 puzzle
+Problem consists in solving a 8 times 8 puzzle
 
 Statistics resulting from solving the problem:
 Strategy used: A*
-Number of movements: 6
-Movements :[u, u, u, l, l, l]
-Visited nodes = 7
-Created nodes = 20
-Time invested = 0.003
+Number of movements: 8
+Movements :[l, l, u, u, u, l, l, l]
+Visited nodes = 9
+Created nodes = 29
+Time invested = 0.002
 
 Created By Alvaro Angel-Moreno Pinilla, Carlos Córdoba Ruiz & Roberto Plaza Romero
