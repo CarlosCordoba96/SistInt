@@ -1,3 +1,3 @@
-In order to execute the programs in Ubuntu, we should write:
+In order to execute the programs, we should write:
 	
 	For the Puzzle.jar: java -jar Puzzle.jar
